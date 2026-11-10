@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dino CRM 使用手册</title>
+<link rel="alternate" hreflang="en" href="en/index.html">
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--ink:#1c2733;--ink2:#5b6b7c;--ink3:#8a97a6;--line:#e3e8ee;
+--blue:#2b5ca8;--blue2:#eef3fa;--amber:#b7791f;--amber2:#fdf6e9;--green:#2e7d5b;--radius:10px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+background:var(--bg);color:var(--ink);font-size:14.5px;line-height:1.7}
+.layout{display:flex;min-height:100vh}
+/* 侧栏 */
+.sidebar{width:264px;flex:0 0 264px;background:var(--card);border-right:1px solid var(--line);
+position:sticky;top:0;height:100vh;overflow-y:auto;padding:20px 14px 30px}
+.brand{display:flex;align-items:baseline;gap:8px;padding:2px 8px 12px}
+.brand b{font-size:16.5px}.brand span{font-size:11.5px;color:var(--ink3)}
+.langbar{padding:0 8px 12px}
+.langbar a{display:inline-block;font-size:11.5px;padding:2px 9px;border-radius:99px;
+border:1px solid var(--line);color:var(--ink2);text-decoration:none}
+.langbar a:hover{border-color:var(--blue);color:var(--blue)}
+.versionbar{display:flex;align-items:center;justify-content:space-between;gap:8px;
+padding:0 8px 12px;font-size:11.5px;color:var(--ink3)}
+.versionbar .ver{background:var(--blue2);color:var(--blue);padding:2px 8px;border-radius:99px;
+font-family:ui-monospace,Menlo,monospace}
+.versionbar a{color:var(--blue);text-decoration:none}
+.versionbar a:hover{text-decoration:underline}
+.rolebar{display:flex;flex-wrap:wrap;gap:6px;padding:4px 8px 14px;border-bottom:1px solid var(--line);margin-bottom:12px}
+.chip{font-size:12px;padding:3px 10px;border-radius:99px;border:1px solid var(--line);background:#fff;
+color:var(--ink2);cursor:pointer;user-select:none}
+.chip.on{background:var(--blue);border-color:var(--blue);color:#fff}
+.searchbox{margin:0 8px 16px}
+.searchbox input{width:100%;padding:7px 10px;border:1px solid var(--line);border-radius:8px;font-size:13px;outline:none}
+.searchbox input:focus{border-color:var(--blue)}
+.navgroup{margin-bottom:14px}
+.navgroup h4{font-size:11.5px;color:var(--ink3);letter-spacing:.08em;padding:0 8px 6px;font-weight:600}
+.navitem{display:flex;align-items:center;gap:8px;padding:7px 8px;border-radius:8px;color:var(--ink2);
+font-size:13px;text-decoration:none;line-height:1.4}
+.navitem:hover{background:var(--blue2)}
+.navitem .nid{font-family:ui-monospace,Menlo,monospace;font-size:10.5px;color:var(--blue);
+background:var(--blue2);padding:1px 6px;border-radius:4px;flex:0 0 auto}
+.navitem .t{flex:1}
+.navitem.hidden{display:none}
+.navgroup.hidden{display:none}
+/* 主区 */
+.main{flex:1;min-width:0;padding:26px 34px 80px;max-width:920px}
+.hero{margin-bottom:8px}
+.hero h1{font-size:22px;margin-bottom:6px}
+.hero p{color:var(--ink2);font-size:13.5px}
+.stats{display:flex;gap:10px;margin:14px 0 6px;flex-wrap:wrap}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:10px 16px}
+.stat b{font-size:19px;display:block}.stat span{font-size:11.5px;color:var(--ink3)}
+article{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:26px 30px;
+margin:18px 0;scroll-margin-top:20px}
+article.hidden{display:none}
+.arthead{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:4px}
+.arthead .nid{font-family:ui-monospace,Menlo,monospace;font-size:12px;color:var(--blue);
+background:var(--blue2);padding:2px 8px;border-radius:5px}
+.arthead h2{font-size:18px}
+.badges{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 4px}
+.badge{font-size:11px;padding:2px 9px;border-radius:99px;background:var(--blue2);color:var(--blue)}
+.badge.adm{background:var(--amber2);color:var(--amber)}
+.artsum{color:var(--ink2);font-size:13.5px;margin-bottom:12px}
+.updated{font-size:11.5px;color:var(--ink3);text-align:right;margin-top:14px}
+article h3{font-size:14.5px;margin:20px 0 8px;padding-left:10px;border-left:3px solid var(--blue)}
+article h4{font-size:13.5px;margin:14px 0 6px;color:var(--ink2)}
+article ol,article ul{padding-left:22px;margin:8px 0}
+article li{margin:4px 0}
+article table{width:100%;border-collapse:collapse;margin:10px 0;font-size:13px}
+article th,article td{border:1px solid var(--line);padding:7px 10px;text-align:left;vertical-align:top}
+article th{background:#f4f7fa;font-weight:600}
+article blockquote.note{background:var(--amber2);border-left:3px solid var(--amber);
+padding:9px 14px;border-radius:0 8px 8px 0;margin:10px 0;font-size:13px;color:#6b5518}
+article code{font-family:ui-monospace,Menlo,monospace;font-size:12.5px;background:#f1f5f8;
+padding:1px 5px;border-radius:4px;color:#2c5480}
+article img{max-width:100%;border:1px solid var(--line);border-radius:8px;margin:6px 0}
+article a{color:var(--blue)}
+.empty-tip{display:none;color:var(--ink3);font-size:13px;padding:30px;text-align:center}
+/* 打印 */
+@media print{
+.sidebar{display:none}.main{padding:0;max-width:none}
+article{border:none;page-break-inside:avoid;margin:14px 0}
+body{background:#fff}
+}
+@media (max-width:900px){
+.layout{display:block}
+.sidebar{width:auto;position:static;height:auto;border-right:none;border-bottom:1px solid var(--line)}
+.main{padding:18px 16px 60px;max-width:none}
+}
+</style>
+</head>
+<body data-all="全部">
+<div class="layout">
+  <aside class="sidebar">
+    <div class="brand"><b>Dino CRM 手册</b><span>内部文档</span></div>
+    <div class="langbar"><a href="en/index.html" title="Read in English">EN</a></div>
+    <div class="versionbar"><span class="ver" title="当前使用手册版本: 初始基线">1.0.0</span><a href="../index.html">历史版本</a></div>
+    <div class="rolebar"><span class="chip on" data-role="全部">全部</span><span class="chip" data-role="销售专员">销售专员</span><span class="chip" data-role="销售组长">销售组长</span><span class="chip" data-role="管理员">管理员</span><span class="chip" data-role="超级管理员">超级管理员</span></div>
+    <div class="searchbox"><input id="q" type="search" placeholder="搜索任务、功能或问题…"></div>
+    <div class="navgroup" data-module="管理看板"><h4>管理看板</h4><a class="navitem" data-target="D-01" href="#D-01"><span class="nid">D-01</span><span class="t">查看管理看板与转化漏斗</span></a></div><div class="navgroup" data-module="销售管理"><h4>销售管理</h4><a class="navitem" data-target="S-00" href="#S-00"><span class="nid">S-00</span><span class="t">销售中心总览与线索流转规则</span></a><a class="navitem" data-target="S-01" href="#S-01"><span class="nid">S-01</span><span class="t">如何领取一条新线索</span></a><a class="navitem" data-target="S-02" href="#S-02"><span class="nid">S-02</span><span class="t">如何外呼并留下通话小结</span></a><a class="navitem" data-target="S-03" href="#S-03"><span class="nid">S-03</span><span class="t">如何记录一次跟进</span></a><a class="navitem" data-target="S-04" href="#S-04"><span class="nid">S-04</span><span class="t">如何转分配或退回公海</span></a><a class="navitem" data-target="S-05" href="#S-05"><span class="nid">S-05</span><span class="t">如何查看通话记录与录音</span></a></div><div class="navgroup" data-module="营销中心"><h4>营销中心</h4><a class="navitem" data-target="M-00" href="#M-00"><span class="nid">M-00</span><span class="t">营销中心配置总览</span></a><a class="navitem" data-target="M-01" href="#M-01"><span class="nid">M-01</span><span class="t">新增与维护渠道</span></a><a class="navitem" data-target="M-02" href="#M-02"><span class="nid">M-02</span><span class="t">查询可售 SKU</span></a><a class="navitem" data-target="M-03" href="#M-03"><span class="nid">M-03</span><span class="t">配置渠道 SKU 关联与售卖价格</span></a><a class="navitem" data-target="M-04" href="#M-04"><span class="nid">M-04</span><span class="t">创建落地页与获取投放链接</span></a><a class="navitem" data-target="M-05" href="#M-05"><span class="nid">M-05</span><span class="t">配置落地页皮肤</span></a></div><div class="navgroup" data-module="用户与订单"><h4>用户与订单</h4><a class="navitem" data-target="O-01" href="#O-01"><span class="nid">O-01</span><span class="t">查询订单与导出订单列表</span></a><a class="navitem" data-target="U-00" href="#U-00"><span class="nid">U-00</span><span class="t">用户与订单管理总览</span></a><a class="navitem" data-target="U-01" href="#U-01"><span class="nid">U-01</span><span class="t">查找用户与维护用户信息</span></a></div><div class="navgroup" data-module="系统管理"><h4>系统管理</h4><a class="navitem" data-target="A-01" href="#A-01"><span class="nid">A-01</span><span class="t">角色与权限配置总览</span></a><a class="navitem" data-target="A-02" href="#A-02"><span class="nid">A-02</span><span class="t">线索分配与掉库规则配置</span></a><a class="navitem" data-target="A-03" href="#A-03"><span class="nid">A-03</span><span class="t">数据权限与客户敏感信息保护</span></a><a class="navitem" data-target="A-04" href="#A-04"><span class="nid">A-04</span><span class="t">触达通道与外显号码配置</span></a><a class="navitem" data-target="A-05" href="#A-05"><span class="nid">A-05</span><span class="t">查询系统配置操作日志</span></a><a class="navitem" data-target="A-06" href="#A-06"><span class="nid">A-06</span><span class="t">管理成员账号与绑定外呼</span></a></div>
+  </aside>
+  <main class="main">
+    <div class="hero">
+      <h1>Dino CRM 使用手册</h1>
+      <p>按任务和角色查找操作说明：一线伙伴跟着步骤做即可，管理员与超管的配置篇请切换角色筛选查看。</p>
+    </div>
+    <div class="stats">
+      <div class="stat"><b>22</b><span>篇手册</span></div>
+      <div class="stat"><b>6</b><span>销售管理</span></div>
+      <div class="stat"><b>6</b><span>系统管理</span></div>
+    </div>
+    <p class="empty-tip" id="empty-tip">当前筛选没有匹配的手册，换个角色或关键词试试。</p>
+    <article id="A-01" data-roles="超级管理员|管理员"><div class="arthead"><span class="nid">A-01</span><h2>角色与权限配置总览</h2></div><div class="badges"><span class="badge adm">超级管理员</span><span class="badge adm">管理员</span></div><p class="artsum">系统配置页面包含角色权限、成员账号、操作日志三个页签；定义每个角色可访问的功能模块及操作级别，并为成员账号分配角色与数据权限（业务线）范围。</p><h3>页面结构</h3>
+<p>入口：系统管理 → 系统配置。页面分三个页签：</p>
+<table><thead><tr><th>页签</th><th>用途</th><th>详细手册</th></tr></thead><tbody><tr><td>角色权限</td><td>定义角色、可访问模块与操作级别</td><td>见本篇</td></tr><tr><td>成员账号</td><td>新增/编辑成员、分配角色与业务线、绑定外呼</td><td>见 A-06</td></tr><tr><td>操作日志</td><td>审计所有配置变更</td><td>见 A-05</td></tr></tbody></table>
+<p><img src="images/_sidebar-menu.png" alt="系统配置左侧菜单" loading="lazy"></p>
+<h3>角色权限页签</h3>
+<ol><li>入口：系统管理 → 系统配置 → <strong>角色权限</strong>。</li><li>角色列表展示：角色名称（含<strong>内置 / 预定</strong>标记）、职责说明、数据权限（全部业务线 / 指定业务线）、成员数。</li><li>点击 <strong>+ 新增角色</strong> 创建新角色；点击某行的 <strong>编辑权限</strong> 调整该角色可访问的模块与操作级别；<strong>删除角色</strong> 仅对非内置角色可用。</li></ol>
+<h3>系统内置角色（真实清单，2026-11-10 核对）</h3>
+<table><thead><tr><th>角色</th><th>标记</th><th>数据权限</th><th>说明</th></tr></thead><tbody><tr><td>超级管理员</td><td>内置</td><td>全部业务线</td><td>全模块可操作</td></tr><tr><td>运营/商业化</td><td>预定</td><td>指定业务线</td><td>用户中心 / 订单中心可操作</td></tr><tr><td>一线销售</td><td>预定</td><td>指定业务线</td><td>用户中心/销售中心/订单中心的基础信息查询与操作</td></tr><tr><td>CC_VN / CC_TH</td><td>预定</td><td>指定业务线</td><td>越南 / 泰国呼叫中心坐席角色</td></tr><tr><td>system manager</td><td>预定</td><td>指定业务线</td><td>每条业务线的系统管理员</td></tr><tr><td>业务负责人 / CFO Office / 总部伙伴 / 渠道推广 / 测试专用</td><td>预定</td><td>角色而异</td><td>按岗位划分</td></tr></tbody></table>
+<h3>完成确认</h3>
+<p>角色列表中能看到新角色及正确的成员数；成员登录后菜单与数据范围符合预期。</p>
+<h3>注意事项</h3>
+<ul><li><strong>超级管理员</strong>为内置角色，不可删除；其权限调整影响面最大，变更前应与业务负责人确认。</li><li>角色的数据权限（业务线范围）决定成员能看哪个国家的数据，改角色会同时影响该角色下全部成员。</li><li>所有角色权限变更都会记入操作日志（见 A-05）。</li></ul>
+<h3>截图</h3>
+<p><img src="images/A-01-roles.png" alt="角色权限页签" loading="lazy"></p><p class="updated">最后更新 2026-11-10</p></article><article id="A-02" data-roles="超级管理员|管理员"><div class="arthead"><span class="nid">A-02</span><h2>线索分配与掉库规则配置</h2></div><div class="badges"><span class="badge adm">超级管理员</span><span class="badge adm">管理员</span></div><p class="artsum">在销售中心右上角「分配与掉库设置」中，按业务线配置掉库规则与销售线索分配比例。</p><h3>操作步骤</h3>
+<ol><li>入口：销售管理 → 销售中心 → 右上角 <strong>分配与掉库设置</strong>。</li><li>选择 <strong>所属业务线</strong>（如马来）。</li><li>配置 <strong>掉库规则</strong>：开关 + 「领取后超过 N 分钟无跟进记录，自动掉库并重新按比例分配」（当前默认 7200 分钟）。</li><li>维护 <strong>线索分配比例</strong> 表：每个领取人一行，设置分配权重（0 表示不参与分配）。</li></ol>
+<h3>规则联动（系统原文）</h3>
+<ul><li>命中业务线分配权重（权重&gt;0）的注册用户直接进入「跟进中」，否则进入公海「待领取」。</li><li>掉库后的线索按当前分配比例重新分配。</li><li>线索超 30 天未付费或被手动退回公海后，需再次手动领取。</li></ul>
+<h3>完成确认</h3>
+<p>设置保存后，新注册线索按新比例流向对应销售；掉库规则在「我的跟进」中生效。</p>
+<h3>注意事项</h3>
+<ul><li>⚠️ 修改分配比例会实时改变在线销售的线索流，建议非高峰时段操作，并在操作日志（A-05）中留痕。</li><li>权重设为 0 即暂停该销售的自动分配，不影响其已有跟进线索。</li><li>掉库分钟数与「30 天未付费回收」是两套独立机制：前者看跟进记录时效，后者看付费结果。</li></ul>
+<h3>截图</h3>
+<p><img src="images/S-06-distribution.png" alt="分配与掉库设置" loading="lazy"></p><p class="updated">最后更新 2026-11-10</p></article><article id="A-03" data-roles="超级管理员|管理员"><div class="arthead"><span class="nid">A-03</span><h2>数据权限与客户敏感信息保护</h2></div><div class="badges"><span class="badge adm">超级管理员</span><span class="badge adm">管理员</span></div><p class="artsum">配置谁能看到客户手机号、通话录音与导出权限，满足三国数据合规要求。（骨架篇，待补充）</p><h3>配置范围（待评审确认）</h3>
+<table><thead><tr><th>配置项</th><th>说明</th><th>现状</th><th>Owner</th></tr></thead><tbody><tr><td>手机号可见性</td><td>普通销售是否明文可见 / 掩码显示</td><td>待确认</td><td>待定</td></tr><tr><td>通话录音权限</td><td>谁可回放、谁可下载</td><td>待确认</td><td>待定</td></tr><tr><td>导出审批</td><td>用户/订单列表导出是否需要审批</td><td>待确认</td><td>待定</td></tr><tr><td>数据留存期限</td><td>通话记录与客户数据的保留与删除周期（越南/泰国/马来法规不同）</td><td>待确认</td><td>待定</td></tr></tbody></table>
+<h3>操作步骤</h3>
+<blockquote class="note">📷 待补充：数据权限配置入口与字段说明。</blockquote>
+<h3>注意事项</h3>
+<p>越南《个人数据保护法》（2026-01-01 生效）与泰国 PDPA 对同意与跨境传输有明确要求，相关配置变更需法务确认后发布。</p>
+<h3>截图</h3>
+<blockquote class="note">📷 待补充</blockquote><p class="updated">最后更新 2026-11-10</p></article><article id="A-04" data-roles="超级管理员|管理员"><div class="arthead"><span class="nid">A-04</span><h2>触达通道与外显号码配置</h2></div><div class="badges"><span class="badge adm">超级管理员</span><span class="badge adm">管理员</span></div><p class="artsum">管理各国外呼外显方案、IM 通道（Zalo/LINE/WhatsApp）账号与模板申请。（骨架篇，待补充）</p><h3>配置范围（待评审确认）</h3>
+<table><thead><tr><th>配置项</th><th>说明</th><th>现状</th><th>Owner</th></tr></thead><tbody><tr><td>动态外显方案</td><td>按国家匹配的外显号码池与健康度</td><td>已有（见 S-02 首次设置）</td><td>待定</td></tr><tr><td>Zalo OA / ZNS</td><td>越南通道账号、模板报备与审核状态</td><td>待确认</td><td>待定</td></tr><tr><td>LINE 官方账号</td><td>泰国通道账号与消息模板</td><td>待确认</td><td>待定</td></tr><tr><td>WhatsApp WABA</td><td>马来通道账号、模板类目与质量评级</td><td>待确认</td><td>待定</td></tr><tr><td>法定时段约束</td><td>各国广告外呼允许时段与频次上限</td><td>待确认</td><td>待定</td></tr></tbody></table>
+<h3>操作步骤</h3>
+<blockquote class="note">📷 待补充：通道账号管理页、模板申请流程、失败码查看入口。</blockquote>
+<h3>注意事项</h3>
+<p>模板变更受平台审核周期影响，上线新国家前应提前 2 周申请；通道禁用/降级会直接影响当日触达计划。</p>
+<h3>截图</h3>
+<blockquote class="note">📷 待补充</blockquote><p class="updated">最后更新 2026-11-10</p></article><article id="A-05" data-roles="超级管理员|管理员"><div class="arthead"><span class="nid">A-05</span><h2>查询系统配置操作日志</h2></div><div class="badges"><span class="badge adm">超级管理员</span><span class="badge adm">管理员</span></div><p class="artsum">在系统配置 → 操作日志页签，按模块、操作人、时间范围追溯谁在什么时间改了什么配置。</p><h3>操作步骤</h3>
+<ol><li>入口：系统管理 → 系统配置 → <strong>操作日志</strong> 页签。</li><li>按需组合筛选：<strong>模块</strong>（如成员账号、角色权限）、<strong>操作人邮箱</strong>、<strong>开始/结束时间</strong>。</li><li>点击 <strong>搜索</strong> 查看结果，列表字段为：模块、操作行为（新增/编辑/启用/停用等）、操作对象、操作人、操作时间。</li></ol>
+<h3>完成确认</h3>
+<p>能定位到目标变更记录，确认操作人与发生时间。</p>
+<h3>注意事项</h3>
+<ul><li>角色权限与成员账号的每一次变更都会自动记录，无需人工登记。</li><li>日志仅用于追溯核查，不可修改或删除。</li><li>建议管理员每周抽查一次与权限、外呼绑定相关的变更记录（见 A-03 的合规留存要求）。</li></ul>
+<h3>截图</h3>
+<p><img src="images/A-01-logs.png" alt="操作日志页签" loading="lazy"></p><p class="updated">最后更新 2026-11-10</p></article><article id="A-06" data-roles="超级管理员|管理员"><div class="arthead"><span class="nid">A-06</span><h2>管理成员账号与绑定外呼</h2></div><div class="badges"><span class="badge adm">超级管理员</span><span class="badge adm">管理员</span></div><p class="artsum">在系统配置 → 成员账号页签新增/编辑成员、分配角色与业务线、启用停用账号，并为坐席绑定外呼。</p><h3>操作步骤</h3>
+<ol><li>入口：系统管理 → 系统配置 → <strong>成员账号</strong> 页签。</li><li>点击 <strong>+ 新增成员</strong>，填写邮箱与昵称，分配角色和业务线（数据权限随角色）。</li><li>对已有成员：按邮箱/昵称搜索，或按角色、状态筛选后点击 <strong>编辑成员</strong> 修改信息。</li><li>为呼叫中心坐席点击 <strong>绑定外呼</strong>（已绑定的显示 <strong>管理外呼</strong>），完成电话条账号关联（销售侧使用见 S-02）。</li><li>离职或长期不用时，将该成员状态切换为<strong>停用</strong>。</li></ol>
+<h3>完成确认</h3>
+<p>成员列表中新成员可见、状态与业务线正确；坐席行显示已绑定外呼标记（CC）。</p>
+<h3>注意事项</h3>
+<ul><li>角色决定功能范围，业务线决定数据范围，两者都要分配正确。</li><li>停用不会删除历史跟进与通话记录；重新启用后数据自动恢复可见。</li><li>成员的每一次新增/编辑/启停都会进入操作日志（见 A-05）。</li></ul>
+<h3>截图</h3>
+<p><img src="images/A-01-members.png" alt="成员账号页签" loading="lazy"></p><p class="updated">最后更新 2026-11-10</p></article><article id="D-01" data-roles="超级管理员|管理员"><div class="arthead"><span class="nid">D-01</span><h2>查看管理看板与转化漏斗</h2></div><div class="badges"><span class="badge adm">超级管理员</span><span class="badge adm">管理员</span></div><p class="artsum">按业务线查看同一注册批次的六环转化漏斗、销售跟进与支付结果。</p><h3>操作步骤</h3>
+<ol><li>入口：左侧菜单 → <strong>管理看板</strong>。</li><li>选择业务线（如马来）、CC 与注册日期范围；顶部三张卡片分别为：<strong>转化总览</strong>（同一注册批次的六环转化）、<strong>销售跟进</strong>（外呼与跟进情况）、<strong>支付结果</strong>（支付人数、收入与 AOV）。</li><li>查看下方「注册批次转化漏斗」：01 线索数（含已付费）→ 02 外呼人数 → 03 接通人数 → 04 预约人数 → 05 体验完成人数 → 06 已支付人数，右侧汇总线索→付费转化率。</li></ol>
+<h3>口径说明（页面原文）</h3>
+<ul><li>注册日期选定同一批线索，后续结果统计至当前。</li><li>各环节<strong>按用户去重</strong>，同一注册批次可跳过部分环节，人数不强制递减（例如体验完成人数来自课程记录，与销售预约出席分别统计）。</li></ul>
+<h3>完成确认</h3>
+<p>所选业务线的漏斗与转化率正常展示，与最近外呼节奏对得上。</p>
+<h3>注意事项</h3>
+<ul><li>漏斗是管理员判断卡点的第一入口：预约人数相对接通人数偏低时，优先查外呼时段与话术（见 S-02 / A-04）。</li><li>看板数据随统计口径更新，对比多日趋势时保持筛选条件一致。</li></ul>
+<h3>截图</h3>
+<p><img src="images/D-01-dashboard.png" alt="管理看板转化漏斗" loading="lazy"></p><p class="updated">最后更新 2026-11-10</p></article><article id="M-00" data-roles="管理员|超级管理员"><div class="arthead"><span class="nid">M-00</span><h2>营销中心配置总览</h2></div><div class="badges"><span class="badge adm">管理员</span><span class="badge adm">超级管理员</span></div><p class="artsum">营销中心五步配置链路：渠道 → SKU → 渠道 SKU 关联 → 落地页 → 皮肤，支撑投放归因与售卖。</p><h3>配置链路</h3>
+<table><thead><tr><th>步骤</th><th>手册</th><th>一句话</th></tr></thead><tbody><tr><td>1. 渠道</td><td>M-01</td><td>建渠道，拿系统生成的渠道码</td></tr><tr><td>2. SKU</td><td>M-02</td><td>查商品系统维护的可售 SKU（只读）</td></tr><tr><td>3. 渠道 SKU 关联</td><td>M-03</td><td>一渠道一套规则：卖什么、什么价、什么优惠</td></tr><tr><td>4. 落地页</td><td>M-04</td><td>获客页挂渠道；支付页挂 SKU，生成 LP ID</td></tr><tr><td>5. 皮肤</td><td>M-05</td><td>页面样式模板，发布后生成模板 ID</td></tr></tbody></table>
+<p>归因与交易链路：<strong>渠道码 → 落地页(LP ID) → 注册/支付 → 订单(O-01) → 线索进销售中心(S-00)</strong>。</p><p class="updated">最后更新 2026-11-10</p></article><article id="M-01" data-roles="管理员|超级管理员"><div class="arthead"><span class="nid">M-01</span><h2>新增与维护渠道</h2></div><div class="badges"><span class="badge adm">管理员</span><span class="badge adm">超级管理员</span></div><p class="artsum">先维护业务线下的渠道类型，再建立具体的销售、KOL、Meta、Google 等渠道；渠道码由系统生成。</p><h3>操作步骤</h3>
+<ol><li>入口：营销中心 → <strong>渠道管理</strong>。</li><li>点击 <strong>+ 新增渠道</strong>，填写渠道名称，选择所属业务线与渠道类型。</li><li>系统自动生成<strong>渠道码</strong>（如 <code>KR-HG001-T562FX</code>，格式为 国家-类型-编号），可点击复制。</li><li>需要调整时点击行内 <strong>编辑</strong>。</li></ol>
+<h3>字段说明</h3>
+<table><thead><tr><th>字段</th><th>说明</th></tr></thead><tbody><tr><td>渠道名称</td><td>业务命名（如 Double 11.11、JP_KOL_koume_asobi）</td></tr><tr><td>渠道码</td><td>系统生成、全局唯一，用于落地页与订单归因</td></tr><tr><td>渠道类型</td><td>销售 / KOL / 投放平台等，需先维护类型</td></tr><tr><td>所属业务线</td><td>韩国、日本、越南、沙特等</td></tr><tr><td>已创建落地页</td><td>该渠道下已建的落地页数量</td></tr></tbody></table>
+<h3>完成确认</h3>
+<p>新渠道出现在列表并可复制渠道码；筛选（渠道名称/渠道码、业务线、渠道类型、投放平台）可用。</p>
+<h3>注意事项</h3>
+<ul><li>渠道是归因的根：落地页（M-04）、SKU 关联（M-03）、订单（O-01）都挂靠渠道码。</li><li>一个渠道只维护一套关联规则（见 M-03）。</li></ul>
+<h3>截图</h3>
+<p><img src="images/M-01-channels.png" alt="渠道管理" loading="lazy"></p><p class="updated">最后更新 2026-11-10</p></article><article id="M-02" data-roles="管理员|超级管理员"><div class="arthead"><span class="nid">M-02</span><h2>查询可售 SKU</h2></div><div class="badges"><span class="badge adm">管理员</span><span class="badge adm">超级管理员</span></div><p class="artsum">SKU 由商品系统统一维护；营销中心仅用于查询和选择已有商品。</p><h3>操作步骤</h3>
+<ol><li>入口：营销中心 → <strong>SKU 管理</strong>。</li><li>按 Product Code / Package Name 搜索，或按业务线、售卖状态筛选。</li><li>核对字段：业务线、Package Name、Member Level、商品编码、Payment Mode、原价、有效期、适用端、展示策略、状态。</li></ol>
+<h3>字段说明</h3>
+<ul><li><strong>商品编码</strong> 规律：<code>web-国家-等级-时长</code>（如 <code>web-th-pro-1y</code> = 泰国 PRO 年卡）。</li><li><strong>Member Level</strong>：PRO / PRO_MAX。</li><li><strong>Payment Mode</strong>：ONE_TIME（一次性买断）等。</li><li><strong>有效期</strong>：1W / 1M / 1Y。</li><li><strong>展示策略</strong>：推荐 等；<strong>状态</strong>：上架。</li><li>原价按各国本地货币计价（日本 ¥、新加坡 S$、泰国 ฿、印尼 Rp、马来 RM）。</li></ul>
+<h3>完成确认</h3>
+<p>能找到目标 SKU 及其原价与有效期，用于后续渠道关联（M-03）与落地页配置（M-04）。</p>
+<h3>注意事项</h3>
+<ul><li>营销中心<strong>不能新增或修改 SKU</strong>，商品调整需走商品系统。</li></ul>
+<h3>截图</h3>
+<p><img src="images/M-02-sku.png" alt="SKU 管理" loading="lazy"></p><p class="updated">最后更新 2026-11-10</p></article><article id="M-03" data-roles="管理员|超级管理员"><div class="arthead"><span class="nid">M-03</span><h2>配置渠道 SKU 关联与售卖价格</h2></div><div class="badges"><span class="badge adm">管理员</span><span class="badge adm">超级管理员</span></div><p class="artsum">每个渠道仅维护一套关联规则；在同一行查看每个 SKU 的售卖规则与应付金额，可配置折扣或立减。</p><h3>配置规则（页面原文）</h3>
+<blockquote class="note">一个渠道仅对应一套关联规则，可编辑现有规则并查看历史。方案内 SKU 不可重复；每个 SKU 可原价售卖、折扣或立减，<strong>优惠后价格不得低于原价的 60%</strong>。</blockquote>
+<h3>操作步骤</h3>
+<ol><li>入口：营销中心 → <strong>渠道 SKU 价格方案</strong>。</li><li>点击 <strong>+ 新建关联</strong>，选择渠道（一个渠道一套规则）。</li><li>从已有 SKU（M-02）中选择商品，设置售卖方式：原价售卖 / 折扣 / 立减。</li><li>可选配置 <strong>Promo Code</strong>（未配置时显示「无折扣，不生成」）。</li><li>设置有效期；编辑现有规则会保留历史记录（行内「历史记录」）。</li></ol>
+<h3>字段说明</h3>
+<table><thead><tr><th>字段</th><th>说明</th></tr></thead><tbody><tr><td>SKU 与售卖规则</td><td>SKU、等级、商品编码、售卖规则、应付金额</td></tr><tr><td>Promo Code</td><td>该渠道的优惠码</td></tr><tr><td>有效期</td><td>关联生效区间</td></tr><tr><td>已绑定落地页</td><td>该方案下已建的落地页数量</td></tr><tr><td>状态</td><td>生效中 / 已结束</td></tr></tbody></table>
+<h3>完成确认</h3>
+<p>渠道行显示正确的 SKU 应付金额与有效期；状态为「生效中」。</p>
+<h3>注意事项</h3>
+<ul><li>关联决定落地页（M-04）上可售的商品与价格，改价格前先确认投放中的落地页。</li><li>优惠下限 60% 是硬约束，配置超出会被拦截。</li></ul>
+<h3>截图</h3>
+<p><img src="images/M-03-plans.png" alt="渠道 SKU 关联" loading="lazy"></p><p class="updated">最后更新 2026-11-10</p></article><article id="M-04" data-roles="管理员|超级管理员"><div class="arthead"><span class="nid">M-04</span><h2>创建落地页与获取投放链接</h2></div><div class="badges"><span class="badge adm">管理员</span><span class="badge adm">超级管理员</span></div><p class="artsum">先选择页面类型：获客落地页仅关联渠道；支付落地页再关联 SKU，并可选择是否使用优惠。</p><h3>创建规则（页面原文）</h3>
+<blockquote class="note">获客落地页只写入渠道、LP ID 和页面配置；支付落地页才写入所选 SKU，且仅在选择「使用优惠」时携带 Promo Code。</blockquote>
+<h3>操作步骤</h3>
+<ol><li>入口：营销中心 → <strong>落地页管理</strong>。</li><li>点击 <strong>+ 新增落地页</strong>，选择页面类型（获客落地页 / 支付落地页）。</li><li>获客落地页：选择渠道，配置页面（皮肤见 M-05）。</li><li>支付落地页：额外选择 SKU（来自渠道关联方案 M-03），如需优惠勾选「使用优惠」。</li><li>保存后生成 <strong>LP ID</strong>，可复制链接用于投放。</li></ol>
+<h3>字段说明</h3>
+<table><thead><tr><th>字段</th><th>说明</th></tr></thead><tbody><tr><td>页面类型</td><td>支付落地页 / 获客落地页</td></tr><tr><td>页面样式</td><td>模板 ID，如 KR_SKIN_A（来自 M-05）</td></tr><tr><td>LP ID</td><td>系统生成（如 LP-EQJVRCQURJ），可复制</td></tr><tr><td>操作</td><td>详情 / 历史记录 / 编辑 / 复制链接</td></tr></tbody></table>
+<h3>完成确认</h3>
+<p>列表出现新落地页，LP ID 可复制，「已绑定落地页」计数在渠道（M-01）中更新。</p>
+<h3>注意事项</h3>
+<ul><li>落地页挂靠渠道码，归因链路为：渠道（M-01）→ 渠道 SKU 关联（M-03）→ 落地页（本篇）→ 订单（O-01）。</li><li>更换页面样式需先在皮肤管理发布对应业务线的模板。</li></ul>
+<h3>截图</h3>
+<p><img src="images/M-04-landings.png" alt="落地页管理" loading="lazy"></p><p class="updated">最后更新 2026-11-10</p></article><article id="M-05" data-roles="管理员|超级管理员"><div class="arthead"><span class="nid">M-05</span><h2>配置落地页皮肤</h2></div><div class="badges"><span class="badge adm">管理员</span><span class="badge adm">超级管理员</span></div><p class="artsum">按业务线配置落地页皮肤；提交后才发布并生成模板 ID，供落地页管理选择。</p><h3>页面说明（原文）</h3>
+<blockquote class="note">按业务线配置落地页皮肤。可暂时保存草稿后离开；<strong>提交后才发布并生成模板 ID</strong>，落地页管理的「皮肤类型」按业务线选择该模板 ID。</blockquote>
+<h3>操作步骤</h3>
+<ol><li>入口：营销中心 → <strong>落地页皮肤管理</strong>。</li><li>点击 <strong>+ 新建皮肤</strong>，选择业务线与落地页类型（支付落地页 / 获客落地页）。</li><li>配置注册方式：手机号注册成账号（有/无验证）、无注册、仅三方登录。</li><li>可保存草稿；点击提交后发布并生成模板 ID（如 <code>KR_SKIN_A</code>）。</li><li>行内操作：<strong>预览</strong>、<strong>编辑</strong>（发布后编辑会生成新版本号 V2/V3…）、<strong>操作记录</strong>。</li></ol>
+<h3>字段说明</h3>
+<table><thead><tr><th>字段</th><th>说明</th></tr></thead><tbody><tr><td>模板 ID</td><td>发布后生成，落地页管理（M-04）按此选择</td></tr><tr><td>状态</td><td>已发布 · V版本号 / 草稿（未发布）</td></tr><tr><td>注册方式</td><td>决定落地页上用户的注册行为</td></tr></tbody></table>
+<h3>完成确认</h3>
+<p>皮肤状态为「已发布」且有模板 ID；在落地页管理新建时可选到该模板。</p>
+<h3>注意事项</h3>
+<ul><li>未发布的草稿不会出现在落地页管理的皮肤选项中。</li><li>每次编辑发布都会产生新版本，历史可通过操作记录追溯。</li></ul>
+<h3>截图</h3>
+<p><img src="images/M-05-skins.png" alt="落地页皮肤管理" loading="lazy"></p><p class="updated">最后更新 2026-11-10</p></article><article id="O-01" data-roles="销售专员|销售组长|管理员|超级管理员"><div class="arthead"><span class="nid">O-01</span><h2>查询订单与导出订单列表</h2></div><div class="badges"><span class="badge">销售专员</span><span class="badge">销售组长</span><span class="badge adm">管理员</span><span class="badge adm">超级管理员</span></div><p class="artsum">在订单中心按订单ID/用户/商品/优惠码查询订单，核对订单状态与支付方式，支持导出。</p><h3>操作步骤</h3>
+<ol><li>入口：订单管理 → <strong>订单中心</strong>。</li><li>搜索支持：订单ID / 用户ID / 商品名称 / 优惠码。</li><li>按国家、用户类型、订单状态、支付方式筛选。</li><li>核对字段：订单ID、商品名称、用户ID、电话号码、优惠码、用户类型、国家、用户状态、订单状态、原价。</li><li>需要批量数据时点击 <strong>导出</strong>。</li></ol>
+<h3>字段说明</h3>
+<ul><li><strong>订单ID</strong> 前缀区分来源：<code>PO</code> 开头为 App 内购买，<code>WEB</code> 开头为网页落地页购买。</li><li><strong>商品名称</strong>：年卡 / 1 Year / 6 Months 等套餐。</li><li><strong>订单状态</strong>：待支付 / 已取消 / 已支付 等。</li></ul>
+<h3>完成确认</h3>
+<p>能定位目标订单并核对金额与状态。</p>
+<h3>注意事项</h3>
+<ul><li>使用优惠码（Promo Code）的订单会显示折扣码；优惠后价格不得低于原价的 60%（见 M-03 配置规则）。</li><li>订单与用户中心数据联动：付费后用户状态变为「付费」，线索自动离开销售中心（见 S-00）。</li></ul>
+<h3>截图</h3>
+<p><img src="images/O-01-orders.png" alt="订单中心" loading="lazy"></p><p class="updated">最后更新 2026-11-10</p></article><article id="S-00" data-roles="销售专员|销售组长|管理员|超级管理员"><div class="arthead"><span class="nid">S-00</span><h2>销售中心总览与线索流转规则</h2></div><div class="badges"><span class="badge">销售专员</span><span class="badge">销售组长</span><span class="badge adm">管理员</span><span class="badge adm">超级管理员</span></div><p class="artsum">销售中心包含公海、我的跟进、已付费、通话记录四个页签；线索流转遵循固定流程，另有组长专属的分配与掉库设置。</p><h3>页面结构</h3>
+<p>入口：销售管理 → 销售中心。顶部提示线索流转全流程：</p>
+<blockquote class="note">注册（有手机号）→ 自动分配 / 待领取 → 跟进中 → 付费回流用户中心</blockquote>
+<p><img src="images/S-00-myfollow.png" alt="销售中心我的跟进" loading="lazy"></p>
+<h3>线索流转规则（点击「查看详情」可查看原文）</h3>
+<ul><li>已注册、<strong>有手机号且未付费</strong>的用户自动进入销售中心。</li><li>命中业务线分配权重则直接进入「跟进中」，否则进入「待领取」（公海）。</li><li><strong>超 30 天未付费</strong>或手动退回公海后，需再次手动领取。</li><li>付费后自动离开销售中心。</li><li>系统不支持手动录入手机号。</li></ul>
+<p><img src="images/S-00-flow.png" alt="流程规则详情" loading="lazy"></p>
+<h3>四个页签</h3>
+<table><thead><tr><th>页签</th><th>内容</th><th>相关手册</th></tr></thead><tbody><tr><td>公海</td><td>待领取线索，行操作为「领取跟进」</td><td>S-01</td></tr><tr><td>我的跟进</td><td>自己名下线索，行操作为「拨号」+「更多」（试听课报告/更新跟进/重新分配线索/添加会员时长）</td><td>S-02 / S-03 / S-04</td></tr><tr><td>已付费</td><td>已支付用户（用户状态=付费），同样可拨号与跟进</td><td>S-02</td></tr><tr><td>通话记录</td><td>全部外呼记录与录音</td><td>S-05</td></tr></tbody></table>
+<h3>通用筛选与操作</h3>
+<ul><li>筛选器：搜索手机号/用户ID/姓名、国家、购买意向、CC、当前跟进阶段、年龄段、课程等级、渠道来源-落地页、渠道来源-App、用户状态、销售咨询预约、预约外呼、注册时间区间。</li><li>工具按钮：<strong>重置筛选</strong>、<strong>导入 leads</strong>、<strong>下载数据</strong>。</li></ul>
+<h3>组长能力</h3>
+<p>销售组长登录后会看到提示：「可查看并重新分配组内（业务线范围）全部销售的跟进线索」，并可使用右上角<strong>分配与掉库设置</strong>（见 A-02）。</p><p class="updated">最后更新 2026-11-10</p></article><article id="S-01" data-roles="销售专员|销售组长"><div class="arthead"><span class="nid">S-01</span><h2>如何领取一条新线索</h2></div><div class="badges"><span class="badge">销售专员</span><span class="badge">销售组长</span></div><p class="artsum">从销售中心「公海」页签领取待跟进线索。</p><h3>操作步骤</h3>
+<ol><li>入口：销售管理 → 销售中心 → <strong>公海</strong> 页签。</li><li>用筛选器缩小范围（国家、购买意向、年龄段、渠道来源等），或直接搜索手机号 / 用户ID / 姓名。</li><li>点击目标行的 <strong>领取跟进</strong>。</li><li>到「我的跟进」确认该客户已归属自己。</li></ol>
+<h3>线索是怎么进入公海的</h3>
+<ul><li>未命中分配权重的注册用户进入「待领取」（公海）。</li><li>被跟进超 30 天未付费、或被手动退回的线索会回到公海。</li></ul>
+<h3>完成确认</h3>
+<p>「我的跟进」中出现该客户，公海计数相应减少。</p>
+<h3>注意事项</h3>
+<ul><li>不要领取并非自己负责的客户。</li><li>购买意向字段（有意向 / 无意向 / 未填写）可帮你优先跟进高意向线索。</li></ul>
+<h3>截图</h3>
+<p><img src="images/S-01-pool.png" alt="公海页签" loading="lazy"></p><p class="updated">最后更新 2026-11-10</p></article><article id="S-02" data-roles="销售专员|销售组长"><div class="arthead"><span class="nid">S-02</span><h2>如何外呼并留下通话小结</h2></div><div class="badges"><span class="badge">销售专员</span><span class="badge">销售组长</span></div><p class="artsum">在销售中心点击「拨号」发起外呼，挂断后补全通话小结并保存；首次使用需完成电话条设置。</p><h3>操作步骤</h3>
+<ol><li>入口：销售管理 → 销售中心 → <strong>我的跟进</strong>（或已付费）页签。</li><li>核对客户信息后，点击该行的 <strong>拨号</strong> 发起外呼。</li><li>通话结束后，补全通话小结和购买意向并保存。</li><li>到「通话记录」核对。</li></ol>
+<h3>系统行为（页面原文）</h3>
+<blockquote class="note">外呼系统与 CRM 轻量集成：坐席点击号码发起外呼，挂断后填写通话小结，系统自动归档到客户档案与销售跟进记录。</blockquote>
+<h3>完成确认</h3>
+<p>通话记录与客户时间轴中均能找到本次通话。</p>
+<h3>注意事项</h3>
+<ul><li>通话结果由系统自动记录；<strong>未保存小结不等于已完成记录</strong>。</li><li>系统不支持手动录入手机号，外呼必须通过行内「拨号」发起。</li></ul>
+<h3>首次外呼前设置</h3>
+<blockquote class="note">仅首次登录电话条并发起外呼的销售需要完成一次。</blockquote>
+<ol><li>电话条「登录」，模式选择 <strong>网页</strong>。</li><li>「请选择外显规则」→ <strong>动态外显号码方案匹配 → 按国家匹配</strong>。</li></ol><p class="updated">最后更新 2026-11-10</p></article><article id="S-03" data-roles="销售专员|销售组长"><div class="arthead"><span class="nid">S-03</span><h2>如何记录一次跟进</h2></div><div class="badges"><span class="badge">销售专员</span><span class="badge">销售组长</span></div><p class="artsum">在「我的跟进」通过行内「更多 → 更新跟进」，把客户反馈、下一步动作和回访时间留在 CRM。</p><h3>操作步骤</h3>
+<ol><li>入口：销售管理 → 销售中心 → <strong>我的跟进</strong> 页签。</li><li>找到客户，点击 <strong>更多 → 更新跟进</strong>。</li><li>填写客户反馈、下一步动作、回访时间。</li><li>保存后检查时间轴。</li></ol>
+<h3>完成确认</h3>
+<p>最新备注和最后更新时间已刷新。</p>
+<h3>注意事项</h3>
+<ul><li>备注必须能让下一位同事看懂。</li><li>「我的跟进」行内「更多」菜单还提供：<strong>试听课报告</strong>、<strong>重新分配线索</strong>（组长）、<strong>添加会员时长</strong>。</li><li>长时间无跟进记录的线索会被自动掉库（默认领取后 7200 分钟，见 A-02），及时更新跟进就是保住线索的方式。</li></ul>
+<h3>截图</h3>
+<p><img src="images/S-00-myfollow.png" alt="我的跟进页签" loading="lazy"></p><p class="updated">最后更新 2026-11-10</p></article><article id="S-04" data-roles="销售组长|超级管理员"><div class="arthead"><span class="nid">S-04</span><h2>如何转分配或退回公海</h2></div><div class="badges"><span class="badge">销售组长</span><span class="badge adm">超级管理员</span></div><p class="artsum">销售组长可在「我的跟进」通过「更多 → 重新分配线索」交接线索；退回公海需填写原因。</p><h3>操作步骤</h3>
+<ol><li>入口：销售管理 → 销售中心 → <strong>我的跟进</strong> 页签。</li><li><strong>重新分配</strong>：点击 <strong>更多 → 重新分配线索</strong>，选择新销售并确认。</li><li><strong>退回公海</strong>：在更多菜单中选择退回，填写退回原因后确认。</li></ol>
+<h3>完成确认</h3>
+<p>时间轴中有交接或退回记录；被转出的线索从「我的跟进」消失。</p>
+<h3>注意事项</h3>
+<ul><li>退回原因必须写清楚，退回后需再次手动领取。</li><li>组长可查看并重新分配<strong>组内（业务线范围）</strong>全部销售的跟进线索；普通销售没有重新分配权限。</li><li>已付费用户的行内菜单没有退回公海选项。</li><li>超过 30 天未付费的线索会被系统自动回收，无需手动操作。</li></ul>
+<h3>截图</h3>
+<p><img src="images/S-00-myfollow.png" alt="我的跟进页签" loading="lazy"></p><p class="updated">最后更新 2026-11-10</p></article><article id="S-05" data-roles="销售专员|销售组长"><div class="arthead"><span class="nid">S-05</span><h2>如何查看通话记录与录音</h2></div><div class="badges"><span class="badge">销售专员</span><span class="badge">销售组长</span></div><p class="artsum">在销售中心「通话记录」页签按客户或通话结果回看外呼记录，可播放录音、下载文字稿。</p><h3>操作步骤</h3>
+<ol><li>入口：销售管理 → 销售中心 → <strong>通话记录</strong> 页签。</li><li>按用户ID / 姓名 / 登录账号搜索，或按国家、<strong>通话结果</strong>、外呼坐席邮箱、时间范围筛选。</li><li>核对：起呼时间、用户ID、姓名、手机号、通话结果、时长、录音、文字稿、本次跟进记录。</li><li>已接通的通话可点击 <strong>播放录音</strong>；有文字稿的点击 <strong>下载文字稿</strong>。</li></ol>
+<h3>字段说明</h3>
+<ul><li><strong>通话结果</strong>：已接通 / 无人接听等。</li><li><strong>录音</strong>：显示「播放录音」或「同步中」（刚挂断的通话录音需要同步时间）。</li><li><strong>文字稿</strong>：显示「下载文字稿」或「录音暂不可用」。</li></ul>
+<h3>完成确认</h3>
+<p>能找到目标通话并判断下一步。</p>
+<h3>注意事项</h3>
+<ul><li>刚结束的通话录音可能显示「同步中」，稍后刷新即可。</li><li>普通销售通常仅可查看自己的通话记录。</li></ul>
+<h3>截图</h3>
+<p><img src="images/S-05-callrecords.png" alt="通话记录页签" loading="lazy"></p><p class="updated">最后更新 2026-11-10</p></article><article id="U-00" data-roles="销售专员|销售组长|管理员|超级管理员"><div class="arthead"><span class="nid">U-00</span><h2>用户与订单管理总览</h2></div><div class="badges"><span class="badge">销售专员</span><span class="badge">销售组长</span><span class="badge adm">管理员</span><span class="badge adm">超级管理员</span></div><p class="artsum">用户管理（用户列表）与订单管理（订单中心）两个模块的入口与手册索引。</p><h3>手册索引</h3>
+<table><thead><tr><th>页面</th><th>手册</th><th>常用操作</th></tr></thead><tbody><tr><td>用户管理 → 用户列表</td><td>U-01</td><td>查找用户、修改信息、添加会员、重发验证码、导出</td></tr><tr><td>订单管理 → 订单中心</td><td>O-01</td><td>查询订单（PO/WEB 前缀）、筛选状态、导出</td></tr></tbody></table>
+<p>数据联动：用户付费 → 用户状态变「付费」→ 线索自动离开销售中心（S-00）→ 订单中心可查该笔订单（O-01）。</p><p class="updated">最后更新 2026-11-10</p></article><article id="U-01" data-roles="销售专员|销售组长|管理员|超级管理员"><div class="arthead"><span class="nid">U-01</span><h2>查找用户与维护用户信息</h2></div><div class="badges"><span class="badge">销售专员</span><span class="badge">销售组长</span><span class="badge adm">管理员</span><span class="badge adm">超级管理员</span></div><p class="artsum">在用户中心按条件查找用户、重发短信验证码、导出用户列表，并使用行内操作（修改信息/添加会员/修改试听课等级）。</p><h3>操作步骤</h3>
+<ol><li>入口：用户管理 → <strong>用户列表</strong>（页面标题为「用户中心」）。</li><li>按用户ID / 姓名 / 登录账号搜索，或按用户类型、注册方式、渠道来源-落地页、渠道来源-App、国家、用户状态筛选。</li><li>需要重发验证码时，点击该行「短信验证码」列的刷新按钮。</li><li>行内 <strong>操作</strong> 菜单提供三项：<strong>修改信息</strong>、<strong>添加会员</strong>、<strong>修改试听课等级</strong>。</li><li>需要批量数据时点击 <strong>导出</strong>。</li></ol>
+<h3>字段说明</h3>
+<ul><li><strong>用户状态</strong>：未付费未体验 / 未付费体验中 / 付费 等。</li><li><strong>用户类型</strong>：正式用户 / 游客用户（游客用户无登录账号，无行内操作）。</li><li><strong>注册方式</strong>：手机号 等；年龄段与课程等级（如 6–8、L1/L2）来自用户学习数据。</li></ul>
+<h3>完成确认</h3>
+<p>修改信息或添加会员后，列表字段立即刷新。</p>
+<h3>注意事项</h3>
+<ul><li>客户手机号为敏感信息，注意保护（见 A-03）。</li><li>导出功能受权限与合规要求约束，导出数据仅限业务用途。</li></ul>
+<h3>截图</h3>
+<p><img src="images/U-01-userlist.png" alt="用户中心" loading="lazy"></p><p class="updated">最后更新 2026-11-10</p></article>
+  </main>
+</div>
+<script>
+(function(){
+var chips=document.querySelectorAll('.chip[data-role]');
+var items=document.querySelectorAll('.navitem[data-target]');
+var arts=document.querySelectorAll('article[data-roles]');
+var emptyTip=document.getElementById('empty-tip');
+var ALL=document.body.dataset.all;
+var curRole=ALL, kw='';
+function apply(){
+  var visible=0;
+  arts.forEach(function(a){
+    var roles=(a.dataset.roles||'').trim().split(/\s*\|\s*/);
+    var okRole=(curRole===ALL)||roles.indexOf(curRole)>=0;
+    var okKw=!kw||a.textContent.toLowerCase().indexOf(kw)>=0;
+    var show=okRole&&okKw;
+    a.classList.toggle('hidden',!show);
+    if(show)visible++;
+  });
+  var navByTarget={};
+  items.forEach(function(n){navByTarget[n.dataset.target]=n;});
+  arts.forEach(function(a){
+    var n=navByTarget[a.id];
+    if(n)n.classList.toggle('hidden',a.classList.contains('hidden'));
+  });
+  document.querySelectorAll('.navgroup').forEach(function(g){
+    var any=g.querySelector('.navitem:not(.hidden)');
+    g.classList.toggle('hidden',!any);
+  });
+  emptyTip.style.display=visible?'none':'block';
+}
+chips.forEach(function(c){c.addEventListener('click',function(){
+  chips.forEach(function(x){x.classList.remove('on')});
+  c.classList.add('on');curRole=c.dataset.role;apply();
+});});
+document.getElementById('q').addEventListener('input',function(e){
+  kw=e.target.value.trim().toLowerCase();apply();
+});
+apply();
+})();
+</script>
+</body>
+</html>

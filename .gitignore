@@ -5,3 +5,4 @@ __pycache__/
 audit/.browser-profile/
 audit/evidence/raw/
 audit/
+outputs/

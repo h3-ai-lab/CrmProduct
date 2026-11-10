@@ -1,0 +1,20 @@
+{
+  "version": "1.1.0",
+  "label": "使用手册整体优化",
+  "summary": "新增登录与角色导航，重构首页和移动端目录；补齐用户、订单、销售、看板说明，移除权限与外呼页面骨架内容。",
+  "released_at": "2026-11-10",
+  "changed_pages": [
+    "A-03",
+    "A-04",
+    "D-01",
+    "G-00",
+    "O-01",
+    "S-00",
+    "U-00",
+    "U-01"
+  ],
+  "prd_urls": [
+    "https://qjphu5vphyf4.jp.larksuite.com/docx/IcXHdLUynohTrOx15bRjomuFpwE",
+    "https://qjphu5vphyf4.jp.larksuite.com/docx/Cl9EdQd0ZotT49xyer5jy03jpIc"
+  ]
+}

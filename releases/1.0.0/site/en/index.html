@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dino CRM Handbook</title>
+<link rel="alternate" hreflang="zh-CN" href="../index.html">
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--ink:#1c2733;--ink2:#5b6b7c;--ink3:#8a97a6;--line:#e3e8ee;
+--blue:#2b5ca8;--blue2:#eef3fa;--amber:#b7791f;--amber2:#fdf6e9;--green:#2e7d5b;--radius:10px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+background:var(--bg);color:var(--ink);font-size:14.5px;line-height:1.7}
+.layout{display:flex;min-height:100vh}
+/* 侧栏 */
+.sidebar{width:264px;flex:0 0 264px;background:var(--card);border-right:1px solid var(--line);
+position:sticky;top:0;height:100vh;overflow-y:auto;padding:20px 14px 30px}
+.brand{display:flex;align-items:baseline;gap:8px;padding:2px 8px 12px}
+.brand b{font-size:16.5px}.brand span{font-size:11.5px;color:var(--ink3)}
+.langbar{padding:0 8px 12px}
+.langbar a{display:inline-block;font-size:11.5px;padding:2px 9px;border-radius:99px;
+border:1px solid var(--line);color:var(--ink2);text-decoration:none}
+.langbar a:hover{border-color:var(--blue);color:var(--blue)}
+.versionbar{display:flex;align-items:center;justify-content:space-between;gap:8px;
+padding:0 8px 12px;font-size:11.5px;color:var(--ink3)}
+.versionbar .ver{background:var(--blue2);color:var(--blue);padding:2px 8px;border-radius:99px;
+font-family:ui-monospace,Menlo,monospace}
+.versionbar a{color:var(--blue);text-decoration:none}
+.versionbar a:hover{text-decoration:underline}
+.rolebar{display:flex;flex-wrap:wrap;gap:6px;padding:4px 8px 14px;border-bottom:1px solid var(--line);margin-bottom:12px}
+.chip{font-size:12px;padding:3px 10px;border-radius:99px;border:1px solid var(--line);background:#fff;
+color:var(--ink2);cursor:pointer;user-select:none}
+.chip.on{background:var(--blue);border-color:var(--blue);color:#fff}
+.searchbox{margin:0 8px 16px}
+.searchbox input{width:100%;padding:7px 10px;border:1px solid var(--line);border-radius:8px;font-size:13px;outline:none}
+.searchbox input:focus{border-color:var(--blue)}
+.navgroup{margin-bottom:14px}
+.navgroup h4{font-size:11.5px;color:var(--ink3);letter-spacing:.08em;padding:0 8px 6px;font-weight:600}
+.navitem{display:flex;align-items:center;gap:8px;padding:7px 8px;border-radius:8px;color:var(--ink2);
+font-size:13px;text-decoration:none;line-height:1.4}
+.navitem:hover{background:var(--blue2)}
+.navitem .nid{font-family:ui-monospace,Menlo,monospace;font-size:10.5px;color:var(--blue);
+background:var(--blue2);padding:1px 6px;border-radius:4px;flex:0 0 auto}
+.navitem .t{flex:1}
+.navitem.hidden{display:none}
+.navgroup.hidden{display:none}
+/* 主区 */
+.main{flex:1;min-width:0;padding:26px 34px 80px;max-width:920px}
+.hero{margin-bottom:8px}
+.hero h1{font-size:22px;margin-bottom:6px}
+.hero p{color:var(--ink2);font-size:13.5px}
+.stats{display:flex;gap:10px;margin:14px 0 6px;flex-wrap:wrap}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:10px 16px}
+.stat b{font-size:19px;display:block}.stat span{font-size:11.5px;color:var(--ink3)}
+article{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:26px 30px;
+margin:18px 0;scroll-margin-top:20px}
+article.hidden{display:none}
+.arthead{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:4px}
+.arthead .nid{font-family:ui-monospace,Menlo,monospace;font-size:12px;color:var(--blue);
+background:var(--blue2);padding:2px 8px;border-radius:5px}
+.arthead h2{font-size:18px}
+.badges{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 4px}
+.badge{font-size:11px;padding:2px 9px;border-radius:99px;background:var(--blue2);color:var(--blue)}
+.badge.adm{background:var(--amber2);color:var(--amber)}
+.artsum{color:var(--ink2);font-size:13.5px;margin-bottom:12px}
+.updated{font-size:11.5px;color:var(--ink3);text-align:right;margin-top:14px}
+article h3{font-size:14.5px;margin:20px 0 8px;padding-left:10px;border-left:3px solid var(--blue)}
+article h4{font-size:13.5px;margin:14px 0 6px;color:var(--ink2)}
+article ol,article ul{padding-left:22px;margin:8px 0}
+article li{margin:4px 0}
+article table{width:100%;border-collapse:collapse;margin:10px 0;font-size:13px}
+article th,article td{border:1px solid var(--line);padding:7px 10px;text-align:left;vertical-align:top}
+article th{background:#f4f7fa;font-weight:600}
+article blockquote.note{background:var(--amber2);border-left:3px solid var(--amber);
+padding:9px 14px;border-radius:0 8px 8px 0;margin:10px 0;font-size:13px;color:#6b5518}
+article code{font-family:ui-monospace,Menlo,monospace;font-size:12.5px;background:#f1f5f8;
+padding:1px 5px;border-radius:4px;color:#2c5480}
+article img{max-width:100%;border:1px solid var(--line);border-radius:8px;margin:6px 0}
+article a{color:var(--blue)}
+.empty-tip{display:none;color:var(--ink3);font-size:13px;padding:30px;text-align:center}
+/* 打印 */
+@media print{
+.sidebar{display:none}.main{padding:0;max-width:none}
+article{border:none;page-break-inside:avoid;margin:14px 0}
+body{background:#fff}
+}
+@media (max-width:900px){
+.layout{display:block}
+.sidebar{width:auto;position:static;height:auto;border-right:none;border-bottom:1px solid var(--line)}
+.main{padding:18px 16px 60px;max-width:none}
+}
+</style>
+</head>
+<body data-all="All">
+<div class="layout">
+  <aside class="sidebar">
+    <div class="brand"><b>Dino CRM Handbook</b><span>Internal docs</span></div>
+    <div class="langbar"><a href="../index.html" title="以中文阅读">中文</a></div>
+    <div class="versionbar"><span class="ver" title="Current handbook version: 初始基线">1.0.0</span><a href="../../index.html">Version history</a></div>
+    <div class="rolebar"><span class="chip on" data-role="All">All</span><span class="chip" data-role="Sales Rep">Sales Rep</span><span class="chip" data-role="Sales Lead">Sales Lead</span><span class="chip" data-role="Admin">Admin</span><span class="chip" data-role="Super Admin">Super Admin</span></div>
+    <div class="searchbox"><input id="q" type="search" placeholder="Search a task, feature or issue…"></div>
+    <div class="navgroup" data-module="Dashboard"><h4>Dashboard</h4><a class="navitem" data-target="D-01" href="#D-01"><span class="nid">D-01</span><span class="t">View the Dashboard and Conversion Funnel</span></a></div><div class="navgroup" data-module="Sales"><h4>Sales</h4><a class="navitem" data-target="S-00" href="#S-00"><span class="nid">S-00</span><span class="t">Sales Center Overview and Lead Flow Rules</span></a><a class="navitem" data-target="S-01" href="#S-01"><span class="nid">S-01</span><span class="t">How to Claim a New Lead</span></a><a class="navitem" data-target="S-02" href="#S-02"><span class="nid">S-02</span><span class="t">How to Make an Outbound Call and Log a Call Summary</span></a><a class="navitem" data-target="S-03" href="#S-03"><span class="nid">S-03</span><span class="t">How to Record a Follow-up</span></a><a class="navitem" data-target="S-04" href="#S-04"><span class="nid">S-04</span><span class="t">How to Reassign a Lead or Return It to the Lead Pool</span></a><a class="navitem" data-target="S-05" href="#S-05"><span class="nid">S-05</span><span class="t">How to View Call Records and Recordings</span></a></div><div class="navgroup" data-module="Marketing"><h4>Marketing</h4><a class="navitem" data-target="M-00" href="#M-00"><span class="nid">M-00</span><span class="t">Marketing Center Setup Overview</span></a><a class="navitem" data-target="M-01" href="#M-01"><span class="nid">M-01</span><span class="t">Add and Maintain Channels</span></a><a class="navitem" data-target="M-02" href="#M-02"><span class="nid">M-02</span><span class="t">Query Sellable SKUs</span></a><a class="navitem" data-target="M-03" href="#M-03"><span class="nid">M-03</span><span class="t">Configure Channel SKU Associations and Selling Prices</span></a><a class="navitem" data-target="M-04" href="#M-04"><span class="nid">M-04</span><span class="t">Create Landing Pages and Get Campaign Links</span></a><a class="navitem" data-target="M-05" href="#M-05"><span class="nid">M-05</span><span class="t">Configure Landing Page Skins</span></a></div><div class="navgroup" data-module="Users &amp; Orders"><h4>Users &amp; Orders</h4><a class="navitem" data-target="O-01" href="#O-01"><span class="nid">O-01</span><span class="t">Query Orders and Export the Order List</span></a><a class="navitem" data-target="U-00" href="#U-00"><span class="nid">U-00</span><span class="t">Users and Orders Management Overview</span></a><a class="navitem" data-target="U-01" href="#U-01"><span class="nid">U-01</span><span class="t">Find Users and Maintain User Information</span></a></div><div class="navgroup" data-module="System Admin"><h4>System Admin</h4><a class="navitem" data-target="A-01" href="#A-01"><span class="nid">A-01</span><span class="t">Roles and Permissions Overview</span></a><a class="navitem" data-target="A-02" href="#A-02"><span class="nid">A-02</span><span class="t">Lead Assignment and Auto-Release Rules</span></a><a class="navitem" data-target="A-03" href="#A-03"><span class="nid">A-03</span><span class="t">Data Scope and Sensitive Customer Information Protection</span></a><a class="navitem" data-target="A-04" href="#A-04"><span class="nid">A-04</span><span class="t">Outreach Channels and Caller ID Number Configuration</span></a><a class="navitem" data-target="A-05" href="#A-05"><span class="nid">A-05</span><span class="t">Querying the System Configuration Audit Log</span></a><a class="navitem" data-target="A-06" href="#A-06"><span class="nid">A-06</span><span class="t">Managing Member Accounts and Binding Outbound Calling</span></a></div>
+  </aside>
+  <main class="main">
+    <div class="hero">
+      <h1>Dino CRM Handbook</h1>
+      <p>Find guidance by task and role. Frontline teams can follow the steps as written; admins and super admins can switch the role filter to see configuration guides.</p>
+    </div>
+    <div class="stats">
+      <div class="stat"><b>22</b><span>guides</span></div>
+      <div class="stat"><b>6</b><span>Sales</span></div>
+      <div class="stat"><b>6</b><span>System Admin</span></div>
+    </div>
+    <p class="empty-tip" id="empty-tip">No guides match the current filter. Try another role or a different keyword.</p>
+    <article id="A-01" data-roles="Super Admin|Admin"><div class="arthead"><span class="nid">A-01</span><h2>Roles and Permissions Overview</h2></div><div class="badges"><span class="badge adm">Super Admin</span><span class="badge adm">Admin</span></div><p class="artsum">The System Configuration page contains the Roles &amp; Permissions, Member Accounts, and Audit Log tabs; it defines the modules and operation levels each role can access, and assigns roles and data scope (business lines) to member accounts.</p><h3>Page structure</h3>
+<p>Entry: System Management (系统管理) → System Configuration (系统配置). The page has three tabs:</p>
+<table><thead><tr><th>Tab</th><th>Purpose</th><th>Detailed manual</th></tr></thead><tbody><tr><td>Roles &amp; Permissions (角色权限)</td><td>Define roles, accessible modules and operation levels</td><td>See this article</td></tr><tr><td>Member Accounts (成员账号)</td><td>Add/edit members, assign roles and business lines, bind outbound calling</td><td>See A-06</td></tr><tr><td>Audit Log (操作日志)</td><td>Audit all configuration changes</td><td>See A-05</td></tr></tbody></table>
+<p><img src="../images/_sidebar-menu.png" alt="System Configuration left menu" loading="lazy"></p>
+<h3>Roles &amp; Permissions tab</h3>
+<ol><li>Entry: System Management → System Configuration → <strong>Roles &amp; Permissions</strong>.</li><li>The role list shows: role name (with <strong>built-in / preset</strong> badges), responsibility description, data scope (all business lines / specified business lines), member count.</li><li>Click <strong>+ Add Role (+ 新增角色)</strong> to create a new role; click <strong>Edit Permissions (编辑权限)</strong> on a row to adjust the modules and operation levels the role can access; <strong>Delete Role (删除角色)</strong> is available only for non-built-in roles.</li></ol>
+<h3>Built-in system roles (actual list, verified 2026-11-10)</h3>
+<table><thead><tr><th>Role</th><th>Badge</th><th>Data scope</th><th>Description</th></tr></thead><tbody><tr><td>Super Admin (超级管理员)</td><td>Built-in</td><td>All business lines</td><td>Full access to all modules</td></tr><tr><td>Operations/Commercial (运营/商业化)</td><td>Preset</td><td>Specified business lines</td><td>Operable in User Center / Order Center</td></tr><tr><td>Frontline Sales (一线销售)</td><td>Preset</td><td>Specified business lines</td><td>Basic information query and operations in User Center / Sales Center / Order Center</td></tr><tr><td>CC_VN / CC_TH</td><td>Preset</td><td>Specified business lines</td><td>Vietnam / Thailand call center agent roles</td></tr><tr><td>system manager</td><td>Preset</td><td>Specified business lines</td><td>System administrator for each business line</td></tr><tr><td>Business Owner / CFO Office / HQ Partner / Channel Promotion / QA (业务负责人 / CFO Office / 总部伙伴 / 渠道推广 / 测试专用)</td><td>Preset</td><td>Varies by role</td><td>Divided by job function</td></tr></tbody></table>
+<h3>Completion check</h3>
+<p>The new role is visible in the role list with the correct member count; after a member logs in, menus and data range match expectations.</p>
+<h3>Notes</h3>
+<ul><li><strong>Super Admin</strong> is a built-in role and cannot be deleted; permission changes for it have the widest impact, so confirm with the business owner before making changes.</li><li>A role's data scope (business line range) determines which country's data members can see; changing a role affects all members under it at once.</li><li>All role permission changes are recorded in the Audit Log (see A-05).</li></ul>
+<h3>Screenshots</h3>
+<p><img src="../images/A-01-roles.png" alt="Roles &amp; Permissions tab" loading="lazy"></p><p class="updated">Last updated 2026-11-10</p></article><article id="A-02" data-roles="Super Admin|Admin"><div class="arthead"><span class="nid">A-02</span><h2>Lead Assignment and Auto-Release Rules</h2></div><div class="badges"><span class="badge adm">Super Admin</span><span class="badge adm">Admin</span></div><p class="artsum">In Distribution &amp; Auto-Release Settings at the top right of the Sales Center, configure auto-release rules and lead allocation ratios per business line.</p><h3>Steps</h3>
+<ol><li>Entry: Sales Management (销售管理) → Sales Center (销售中心) → <strong>Distribution &amp; Auto-Release Settings (分配与掉库设置)</strong> at the top right.</li><li>Select the <strong>business line (所属业务线)</strong> (e.g. Malaysia).</li><li>Configure the <strong>auto-release rule (掉库规则)</strong>: a toggle plus "if no follow-up record within N minutes after a lead is claimed, auto-release it and re-assign by ratio" (currently 7200 minutes by default).</li><li>Maintain the <strong>lead allocation ratio (线索分配比例)</strong> table: one row per claimer, set the allocation weight (0 means not participating in assignment).</li></ol>
+<h3>Rule interactions (original system text)</h3>
+<ul><li>Registered users matching a business line allocation weight (weight &gt; 0) go directly to "In Follow-up (跟进中)", otherwise they enter the Lead Pool (公海) as "Pending Claim (待领取)".</li><li>Auto-released leads are re-assigned according to the current allocation ratio.</li><li>A lead unpaid for more than 30 days, or manually returned to the Lead Pool, must be claimed again manually.</li></ul>
+<h3>Completion check</h3>
+<p>After the settings are saved, newly registered leads flow to the corresponding sales reps per the new ratios; the auto-release rule takes effect in "My Follow-ups (我的跟进)".</p>
+<h3>Notes</h3>
+<ul><li>⚠️ Changing allocation ratios instantly changes the lead flow of online sales reps; make changes off-peak and leave a trace in the Audit Log (操作日志) (A-05).</li><li>Setting a weight to 0 suspends automatic assignment for that sales rep without affecting their existing follow-up leads.</li><li>The auto-release minutes and the "30-day unpaid recovery" are two independent mechanisms: the former checks follow-up record recency, the latter checks payment outcome.</li></ul>
+<h3>Screenshots</h3>
+<p><img src="../images/S-06-distribution.png" alt="Distribution &amp; Auto-Release Settings" loading="lazy"></p><p class="updated">Last updated 2026-11-10</p></article><article id="A-03" data-roles="Super Admin|Admin"><div class="arthead"><span class="nid">A-03</span><h2>Data Scope and Sensitive Customer Information Protection</h2></div><div class="badges"><span class="badge adm">Super Admin</span><span class="badge adm">Admin</span></div><p class="artsum">Configure who can view customer phone numbers and call recordings and who can export data, to meet data compliance requirements in the three countries. (Skeleton page, to be completed.)</p><h3>Configuration scope (to be confirmed in review)</h3>
+<table><thead><tr><th>Item</th><th>Description</th><th>Status</th><th>Owner</th></tr></thead><tbody><tr><td>Phone number visibility</td><td>Whether regular sales reps see numbers in plain text or masked</td><td>To be confirmed</td><td>TBD</td></tr><tr><td>Call recording permissions</td><td>Who can play back and who can download</td><td>To be confirmed</td><td>TBD</td></tr><tr><td>Export approval</td><td>Whether exporting user/order lists requires approval</td><td>To be confirmed</td><td>TBD</td></tr><tr><td>Data retention period</td><td>Retention and deletion cycles for Call Records (通话记录) and customer data (regulations differ in Vietnam/Thailand/Malaysia)</td><td>To be confirmed</td><td>TBD</td></tr></tbody></table>
+<h3>Steps</h3>
+<blockquote class="note">📷 To be added: entry point and field description for data scope (数据权限) configuration.</blockquote>
+<h3>Notes</h3>
+<p>Vietnam's Personal Data Protection Law (effective 2026-01-01) and Thailand's PDPA set explicit requirements for consent and cross-border transfer; related configuration changes must be confirmed by legal before release.</p>
+<h3>Screenshots</h3>
+<blockquote class="note">📷 To be added</blockquote><p class="updated">Last updated 2026-11-10</p></article><article id="A-04" data-roles="Super Admin|Admin"><div class="arthead"><span class="nid">A-04</span><h2>Outreach Channels and Caller ID Number Configuration</h2></div><div class="badges"><span class="badge adm">Super Admin</span><span class="badge adm">Admin</span></div><p class="artsum">Manage caller ID number schemes per country and IM channel (Zalo/LINE/WhatsApp) accounts and template applications. (Skeleton page, to be completed.)</p><h3>Configuration scope (to be confirmed in review)</h3>
+<table><thead><tr><th>Item</th><th>Description</th><th>Status</th><th>Owner</th></tr></thead><tbody><tr><td>Dynamic caller ID scheme</td><td>Caller ID number pool and health score matched by country</td><td>Existing (see S-02 first-time setup)</td><td>TBD</td></tr><tr><td>Zalo OA / ZNS</td><td>Vietnam channel account, template registration and review status</td><td>To be confirmed</td><td>TBD</td></tr><tr><td>LINE Official Account (LINE 官方账号)</td><td>Thailand channel account and message templates</td><td>To be confirmed</td><td>TBD</td></tr><tr><td>WhatsApp WABA</td><td>Malaysia channel account, template categories and quality rating</td><td>To be confirmed</td><td>TBD</td></tr><tr><td>Legal time-window constraints</td><td>Allowed time windows and frequency caps for advertising outbound calls per country</td><td>To be confirmed</td><td>TBD</td></tr></tbody></table>
+<h3>Steps</h3>
+<blockquote class="note">📷 To be added: channel account management page, template application process, and entry point for viewing failure codes.</blockquote>
+<h3>Notes</h3>
+<p>Template changes are subject to platform review cycles; apply at least 2 weeks before launching a new country. Disabling or downgrading a channel directly affects the same-day outreach plan.</p>
+<h3>Screenshots</h3>
+<blockquote class="note">📷 To be added</blockquote><p class="updated">Last updated 2026-11-10</p></article><article id="A-05" data-roles="Super Admin|Admin"><div class="arthead"><span class="nid">A-05</span><h2>Querying the System Configuration Audit Log</h2></div><div class="badges"><span class="badge adm">Super Admin</span><span class="badge adm">Admin</span></div><p class="artsum">In the System Configuration → Audit Log tab, trace who changed which configuration and when by module, operator, and time range.</p><h3>Steps</h3>
+<ol><li>Entry: System Management (系统管理) → System Configuration (系统配置) → <strong>Audit Log (操作日志)</strong> tab.</li><li>Combine filters as needed: <strong>Module (模块)</strong> (e.g. Member Accounts (成员账号), Roles &amp; Permissions (角色权限)), <strong>operator email (操作人邮箱)</strong>, <strong>start/end time (开始/结束时间)</strong>.</li><li>Click <strong>Search (搜索)</strong> to view results; the list fields are: Module, Action (add/edit/enable/disable, etc.), Object, Operator, Time.</li></ol>
+<h3>Completion check</h3>
+<p>You can locate the target change record and confirm the operator and the time it occurred.</p>
+<h3>Notes</h3>
+<ul><li>Every change to roles &amp; permissions and member accounts is recorded automatically; no manual registration is needed.</li><li>Logs are for tracing and review only; they cannot be modified or deleted.</li><li>Admins are advised to spot-check changes related to permissions and outbound calling binding once a week (see A-03 for compliance retention requirements).</li></ul>
+<h3>Screenshots</h3>
+<p><img src="../images/A-01-logs.png" alt="Audit Log tab" loading="lazy"></p><p class="updated">Last updated 2026-11-10</p></article><article id="A-06" data-roles="Super Admin|Admin"><div class="arthead"><span class="nid">A-06</span><h2>Managing Member Accounts and Binding Outbound Calling</h2></div><div class="badges"><span class="badge adm">Super Admin</span><span class="badge adm">Admin</span></div><p class="artsum">In the System Configuration → Member Accounts tab, add/edit members, assign roles and business lines, enable or disable accounts, and bind outbound calling for agents.</p><h3>Steps</h3>
+<ol><li>Entry: System Management (系统管理) → System Configuration (系统配置) → <strong>Member Accounts (成员账号)</strong> tab.</li><li>Click <strong>+ Add Member (+ 新增成员)</strong>, fill in the email and nickname, and assign a role and business line (data scope (数据权限) follows the role).</li><li>For existing members: search by email/nickname, or filter by role and status, then click <strong>Edit Member (编辑成员)</strong> to modify information.</li><li>For call center agents, click <strong>Bind Outbound Calling (绑定外呼)</strong> (already-bound rows show <strong>Manage Outbound Calling (管理外呼)</strong>) to complete the phone bar account association (for usage on the sales side see S-02).</li><li>When a member leaves or is inactive for a long time, switch their status to <strong>Disabled (停用)</strong>.</li></ol>
+<h3>Completion check</h3>
+<p>The new member is visible in the member list with correct status and business line; agent rows show the bound outbound calling badge (CC).</p>
+<h3>Notes</h3>
+<ul><li>Roles determine functional scope and business lines determine data scope; both must be assigned correctly.</li><li>Disabling does not delete historical follow-ups and Call Records; data becomes visible again automatically after re-enabling.</li><li>Every add/edit/enable-disable of a member enters the Audit Log (操作日志) (see A-05).</li></ul>
+<h3>Screenshots</h3>
+<p><img src="../images/A-01-members.png" alt="Member Accounts tab" loading="lazy"></p><p class="updated">Last updated 2026-11-10</p></article><article id="D-01" data-roles="Super Admin|Admin"><div class="arthead"><span class="nid">D-01</span><h2>View the Dashboard and Conversion Funnel</h2></div><div class="badges"><span class="badge adm">Super Admin</span><span class="badge adm">Admin</span></div><p class="artsum">View the six-stage conversion funnel, sales follow-up, and payment results for the same registration cohort by business line.</p><h3>Steps</h3>
+<ol><li>Entry: left menu → <strong>Dashboard (管理看板)</strong>.</li><li>Select a business line (业务线) (e.g. Malaysia), CC, and registration date range; the three cards at the top are: <strong>Conversion overview</strong> (six-stage conversion for the same registration cohort), <strong>Sales follow-up</strong> (outbound calls and follow-up status), and <strong>Payment results</strong> (paid users, revenue, and AOV).</li><li>Review the Registration cohort conversion funnel below: 01 lead count (incl. Paid) → 02 users called → 03 users connected → 04 users booked → 05 trial completed → 06 users paid, with the lead-to-paid conversion rate summarized on the right.</li></ol>
+<h3>Definitions (original page text)</h3>
+<ul><li>The registration date selects one cohort of leads; subsequent results are tracked up to the present.</li><li>Each stage is <strong>deduplicated by user</strong>; users from the same registration cohort may skip some stages, so counts do not necessarily decrease stage by stage (for example, trial completions come from course records and are counted separately from sales booking attendance).</li></ul>
+<h3>Confirm completion</h3>
+<p>The funnel and conversion rates for the selected business line display correctly and match recent outbound call cadence.</p>
+<h3>Notes</h3>
+<ul><li>The funnel is the first entry point for admins to spot bottlenecks: when bookings are low relative to connected calls, check outbound call time slots and scripts first (see S-02 / A-04).</li><li>Dashboard data updates with the statistical definitions; keep filters consistent when comparing multi-day trends.</li></ul>
+<h3>Screenshot</h3>
+<p><img src="../images/D-01-dashboard.png" alt="Dashboard conversion funnel" loading="lazy"></p><p class="updated">Last updated 2026-11-10</p></article><article id="M-00" data-roles="Admin|Super Admin"><div class="arthead"><span class="nid">M-00</span><h2>Marketing Center Setup Overview</h2></div><div class="badges"><span class="badge adm">Admin</span><span class="badge adm">Super Admin</span></div><p class="artsum">The five-step Marketing Center setup chain: Channel → SKU → Channel SKU association → Landing Page → Skin, supporting attribution and selling.</p><h3>Setup Chain</h3>
+<table><thead><tr><th>Step</th><th>Manual</th><th>In one sentence</th></tr></thead><tbody><tr><td>1. Channel</td><td>M-01</td><td>Create a channel and get the system-generated channel code</td></tr><tr><td>2. SKU</td><td>M-02</td><td>View sellable SKUs maintained by the product system (read-only)</td></tr><tr><td>3. Channel SKU association</td><td>M-03</td><td>One rule set per channel: what to sell, at what price, with what promo</td></tr><tr><td>4. Landing Page</td><td>M-04</td><td>Acquisition pages link to channels; payment pages link to SKUs and generate an LP ID</td></tr><tr><td>5. Skin</td><td>M-05</td><td>Page style templates; publishing generates a template ID</td></tr></tbody></table>
+<p>Attribution and transaction chain: <strong>Channel Code → Landing Page (LP ID) → Registration/Payment → Order (O-01) → Lead enters the Sales Center (S-00)</strong>.</p><p class="updated">Last updated 2026-11-10</p></article><article id="M-01" data-roles="Admin|Super Admin"><div class="arthead"><span class="nid">M-01</span><h2>Add and Maintain Channels</h2></div><div class="badges"><span class="badge adm">Admin</span><span class="badge adm">Super Admin</span></div><p class="artsum">Maintain channel types for business lines first, then create specific Sales, KOL, Meta, Google and other channels; channel codes are system-generated.</p><h3>Steps</h3>
+<ol><li>Entry: Marketing Center (营销中心) → <strong>Channel Management (渠道管理)</strong>.</li><li>Click <strong>+ New Channel</strong> and fill in the channel name, then select the business line and channel type.</li><li>The system automatically generates a <strong>Channel Code (渠道码)</strong> (e.g. <code>KR-HG001-T562FX</code>, in the format country-type-number), which can be copied with a click.</li><li>To make changes, click <strong>Edit (编辑)</strong> in the row.</li></ol>
+<h3>Field Reference</h3>
+<table><thead><tr><th>Field</th><th>Description</th></tr></thead><tbody><tr><td>Channel Name</td><td>Business naming (e.g. Double 11.11, JP_KOL_koume_asobi)</td></tr><tr><td>Channel Code</td><td>System-generated, globally unique, used for landing page and order attribution</td></tr><tr><td>Channel Type</td><td>Sales / KOL / ad platform, etc.; types must be maintained first</td></tr><tr><td>Business Line</td><td>Korea, Japan, Vietnam, Saudi Arabia, etc.</td></tr><tr><td>Landing Pages Created</td><td>Number of landing pages created under this channel</td></tr></tbody></table>
+<h3>Completion Check</h3>
+<p>The new channel appears in the list and its channel code can be copied; filters (channel name/channel code, business line, channel type, ad platform) are available.</p>
+<h3>Notes</h3>
+<ul><li>Channels are the root of attribution: landing pages (M-04), SKU associations (M-03), and orders (O-01) all attach to the channel code.</li><li>One channel maintains one set of association rules (see M-03).</li></ul>
+<h3>Screenshots</h3>
+<p><img src="../images/M-01-channels.png" alt="Channel Management" loading="lazy"></p><p class="updated">Last updated 2026-11-10</p></article><article id="M-02" data-roles="Admin|Super Admin"><div class="arthead"><span class="nid">M-02</span><h2>Query Sellable SKUs</h2></div><div class="badges"><span class="badge adm">Admin</span><span class="badge adm">Super Admin</span></div><p class="artsum">SKUs are maintained centrally by the product system; the Marketing Center is only used to query and select existing products.</p><h3>Steps</h3>
+<ol><li>Entry: Marketing Center (营销中心) → <strong>SKU Management (SKU 管理)</strong>.</li><li>Search by Product Code / Package Name, or filter by business line and selling status.</li><li>Verify fields: business line, Package Name, Member Level, product code, Payment Mode, original price, validity period, applicable platform, display strategy, and status.</li></ol>
+<h3>Field Reference</h3>
+<ul><li><strong>Product code</strong> pattern: <code>web-country-level-duration</code> (e.g. <code>web-th-pro-1y</code> = Thailand PRO annual plan).</li><li><strong>Member Level</strong>: PRO / PRO_MAX.</li><li><strong>Payment Mode</strong>: ONE_TIME (one-time buyout), etc.</li><li><strong>Validity period</strong>: 1W / 1M / 1Y.</li><li><strong>Display strategy</strong>: Recommended, etc.; <strong>Status</strong>: on sale.</li><li>Original prices are denominated in each country's local currency (Japan ¥, Singapore S$, Thailand ฿, Indonesia Rp, Malaysia RM).</li></ul>
+<h3>Completion Check</h3>
+<p>You can find the target SKU with its original price and validity period, for use in later channel association (M-03) and landing page configuration (M-04).</p>
+<h3>Notes</h3>
+<ul><li>The Marketing Center <strong>cannot add or modify SKUs</strong>; product changes must go through the product system.</li></ul>
+<h3>Screenshots</h3>
+<p><img src="../images/M-02-sku.png" alt="SKU Management" loading="lazy"></p><p class="updated">Last updated 2026-11-10</p></article><article id="M-03" data-roles="Admin|Super Admin"><div class="arthead"><span class="nid">M-03</span><h2>Configure Channel SKU Associations and Selling Prices</h2></div><div class="badges"><span class="badge adm">Admin</span><span class="badge adm">Super Admin</span></div><p class="artsum">Each channel maintains one set of association rules; view selling rules and payable amounts for each SKU in one row, with discount or instant-reduction options.</p><h3>Configuration Rules (page text)</h3>
+<blockquote class="note">One channel corresponds to one set of association rules; existing rules can be edited and history can be viewed. SKUs within a plan cannot be duplicated; each SKU can be sold at the original price, at a discount, or with an instant reduction. <strong>The discounted price must not be lower than 60% of the original price.</strong></blockquote>
+<h3>Steps</h3>
+<ol><li>Entry: Marketing Center (营销中心) → <strong>Channel SKU Pricing Plan (渠道 SKU 价格方案)</strong>.</li><li>Click <strong>+ New Association</strong> and select a channel (one rule set per channel).</li><li>Select products from existing SKUs (M-02) and set the selling method: original price / discount / instant reduction.</li><li>Optionally configure a <strong>Promo Code</strong> (when not configured, it shows "No discount, not generated").</li><li>Set the validity period; editing existing rules keeps history records ("History" in the row).</li></ol>
+<h3>Field Reference</h3>
+<table><thead><tr><th>Field</th><th>Description</th></tr></thead><tbody><tr><td>SKU and Selling Rules</td><td>SKU, level, product code, selling rule, payable amount</td></tr><tr><td>Promo Code</td><td>The promo code for this channel</td></tr><tr><td>Validity Period</td><td>Effective interval of the association</td></tr><tr><td>Landing Pages Bound</td><td>Number of landing pages created under this plan</td></tr><tr><td>Status</td><td>Active / Ended</td></tr></tbody></table>
+<h3>Completion Check</h3>
+<p>The channel row shows the correct SKU payable amount and validity period; the status is "Active".</p>
+<h3>Notes</h3>
+<ul><li>The association determines the products and prices available on landing pages (M-04); confirm active landing pages before changing prices.</li><li>The 60% discount floor is a hard constraint; configurations exceeding it will be blocked.</li></ul>
+<h3>Screenshots</h3>
+<p><img src="../images/M-03-plans.png" alt="Channel SKU Association" loading="lazy"></p><p class="updated">Last updated 2026-11-10</p></article><article id="M-04" data-roles="Admin|Super Admin"><div class="arthead"><span class="nid">M-04</span><h2>Create Landing Pages and Get Campaign Links</h2></div><div class="badges"><span class="badge adm">Admin</span><span class="badge adm">Super Admin</span></div><p class="artsum">Choose the page type first: acquisition landing pages link only to a channel; payment landing pages additionally link to SKUs, with an optional promo.</p><h3>Creation Rules (page text)</h3>
+<blockquote class="note">Acquisition landing pages only record the channel, LP ID, and page configuration; payment landing pages additionally record the selected SKUs, and carry a Promo Code only when "Use Promo" is selected.</blockquote>
+<h3>Steps</h3>
+<ol><li>Entry: Marketing Center (营销中心) → <strong>Landing Page Management (落地页管理)</strong>.</li><li>Click <strong>+ New Landing Page</strong> and select the page type (acquisition landing page / payment landing page).</li><li>Acquisition landing page: select a channel and configure the page (skins, see M-05).</li><li>Payment landing page: additionally select SKUs (from the channel association plan, M-03); check "Use Promo" if a discount is needed.</li><li>After saving, an <strong>LP ID</strong> is generated and the link can be copied for campaigns.</li></ol>
+<h3>Field Reference</h3>
+<table><thead><tr><th>Field</th><th>Description</th></tr></thead><tbody><tr><td>Page Type</td><td>Payment landing page / acquisition landing page</td></tr><tr><td>Page Style</td><td>Template ID, e.g. KR_SKIN_A (from M-05)</td></tr><tr><td>LP ID</td><td>System-generated (e.g. LP-EQJVRCQURJ), can be copied</td></tr><tr><td>Row Actions</td><td>Details / History / Edit / Copy Link</td></tr></tbody></table>
+<h3>Completion Check</h3>
+<p>The new landing page appears in the list, the LP ID can be copied, and the "Landing Pages Bound" count is updated in the channel (M-01).</p>
+<h3>Notes</h3>
+<ul><li>Landing pages attach to the channel code; the attribution chain is: Channel (M-01) → Channel SKU association (M-03) → Landing Page (this manual) → Order (O-01).</li><li>To change the page style, publish a template for the corresponding business line in Skin Management first.</li></ul>
+<h3>Screenshots</h3>
+<p><img src="../images/M-04-landings.png" alt="Landing Page Management" loading="lazy"></p><p class="updated">Last updated 2026-11-10</p></article><article id="M-05" data-roles="Admin|Super Admin"><div class="arthead"><span class="nid">M-05</span><h2>Configure Landing Page Skins</h2></div><div class="badges"><span class="badge adm">Admin</span><span class="badge adm">Super Admin</span></div><p class="artsum">Configure landing page skins per business line; only after submission are they published and a template ID generated for selection in Landing Page Management.</p><h3>Page Description (original text)</h3>
+<blockquote class="note">Configure landing page skins per business line. You can save a draft and leave temporarily; <strong>only after submission is it published and a template ID generated</strong>, which Landing Page Management selects as the "Skin Type" by business line.</blockquote>
+<h3>Steps</h3>
+<ol><li>Entry: Marketing Center (营销中心) → <strong>Landing Page Skin Management (落地页皮肤管理)</strong>.</li><li>Click <strong>+ New Skin</strong> and select the business line and landing page type (payment landing page / acquisition landing page).</li><li>Configure the registration method: register an account with mobile number (with/without verification), no registration, or third-party login only.</li><li>You can save a draft; after clicking submit it is published and a template ID (e.g. <code>KR_SKIN_A</code>) is generated.</li><li>Row actions: <strong>Preview</strong>, <strong>Edit</strong> (editing after publishing generates a new version number V2/V3...), and <strong>Operation Log</strong>.</li></ol>
+<h3>Field Reference</h3>
+<table><thead><tr><th>Field</th><th>Description</th></tr></thead><tbody><tr><td>Template ID</td><td>Generated after publishing; Landing Page Management (M-04) selects by this ID</td></tr><tr><td>Status</td><td>Published · V version number / Draft (unpublished)</td></tr><tr><td>Registration Method</td><td>Determines users' registration behavior on the landing page</td></tr></tbody></table>
+<h3>Completion Check</h3>
+<p>The skin status is "Published" with a template ID; the template can be selected when creating a new landing page in Landing Page Management.</p>
+<h3>Notes</h3>
+<ul><li>Unpublished drafts do not appear in the skin options of Landing Page Management.</li><li>Every edit and publish produces a new version; history can be traced via the operation log.</li></ul>
+<h3>Screenshots</h3>
+<p><img src="../images/M-05-skins.png" alt="Landing Page Skin Management" loading="lazy"></p><p class="updated">Last updated 2026-11-10</p></article><article id="O-01" data-roles="Sales Rep|Sales Lead|Admin|Super Admin"><div class="arthead"><span class="nid">O-01</span><h2>Query Orders and Export the Order List</h2></div><div class="badges"><span class="badge">Sales Rep</span><span class="badge">Sales Lead</span><span class="badge adm">Admin</span><span class="badge adm">Super Admin</span></div><p class="artsum">Query orders in the Order Center by order ID / user / product / promo code, verify order status and payment method, and export when needed.</p><h3>Steps</h3>
+<ol><li>Entry: Order Management (订单管理) → <strong>Order Center (订单中心)</strong>.</li><li>Search supports: Order ID / User ID / Product Name / Promo Code.</li><li>Filter by country, user type, order status, and payment method.</li><li>Verify fields: Order ID, Product Name, User ID, Phone Number, Promo Code, User Type, Country, User Status, Order Status, Original Price.</li><li>Click <strong>Export (导出)</strong> when bulk data is needed.</li></ol>
+<h3>Field Reference</h3>
+<ul><li><strong>Order ID</strong> prefixes indicate the source: IDs starting with <code>PO</code> are in-app purchases; IDs starting with <code>WEB</code> are purchases from web landing pages.</li><li><strong>Product Name</strong>: plans such as Annual Card / 1 Year / 6 Months.</li><li><strong>Order status</strong>: pending payment / canceled / paid, etc.</li></ul>
+<h3>Completion Check</h3>
+<p>You can locate the target order and verify its amount and status.</p>
+<h3>Notes</h3>
+<ul><li>Orders using a promo code display the discount code; the discounted price must not be lower than 60% of the original price (see M-03 configuration rules).</li><li>Orders and the User Center are data-linked: after payment the user status becomes "Paid" and the lead automatically leaves the Sales Center (see S-00).</li></ul>
+<h3>Screenshots</h3>
+<p><img src="../images/O-01-orders.png" alt="Order Center" loading="lazy"></p><p class="updated">Last updated 2026-11-10</p></article><article id="S-00" data-roles="Sales Rep|Sales Lead|Admin|Super Admin"><div class="arthead"><span class="nid">S-00</span><h2>Sales Center Overview and Lead Flow Rules</h2></div><div class="badges"><span class="badge">Sales Rep</span><span class="badge">Sales Lead</span><span class="badge adm">Admin</span><span class="badge adm">Super Admin</span></div><p class="artsum">The Sales Center includes four tabs: Lead Pool, My Follow-ups, Paid, and Call Records; leads flow through a fixed process, with assignment and auto-release settings exclusive to team leads.</p><h3>Page structure</h3>
+<p>Entry: Sales Management (销售管理) → Sales Center (销售中心). A banner at the top shows the full lead flow:</p>
+<blockquote class="note">Registered (with phone number) → Auto assignment / Pending claim → Follow-up in progress → On payment, returns to User Center</blockquote>
+<p><img src="../images/S-00-myfollow.png" alt="My Follow-ups in the Sales Center" loading="lazy"></p>
+<h3>Lead flow rules (click View Details for the original text)</h3>
+<ul><li>Registered users who <strong>have a phone number and have not paid</strong> automatically enter the Sales Center.</li><li>If the user matches a business line assignment weight, they go directly to Follow-up in progress; otherwise they go to Pending claim (Lead Pool (公海)).</li><li>Users <strong>unpaid after 30 days</strong> or manually returned to the Lead Pool must be claimed manually again.</li><li>Leads leave the Sales Center automatically once the user pays.</li><li>The system does not support manual phone number entry.</li></ul>
+<p><img src="../images/S-00-flow.png" alt="Flow rules detail" loading="lazy"></p>
+<h3>Four tabs</h3>
+<table><thead><tr><th>Tab</th><th>Content</th><th>Related manual</th></tr></thead><tbody><tr><td>Lead Pool</td><td>Leads pending claim; row action is Claim &amp; Follow up (领取跟进)</td><td>S-01</td></tr><tr><td>My Follow-ups (我的跟进)</td><td>Leads under your name; row actions are Dial (拨号) + More (更多) (Trial Lesson Report / Update follow-up / Reassign lead / Add membership duration)</td><td>S-02 / S-03 / S-04</td></tr><tr><td>Paid (已付费)</td><td>Users who have paid (user status = Paid); dialing and follow-up also available</td><td>S-02</td></tr><tr><td>Call Records (通话记录)</td><td>All outbound call records and recordings</td><td>S-05</td></tr></tbody></table>
+<h3>Common filters and actions</h3>
+<ul><li>Filters (筛选器): search by phone number / user ID / name, country, purchase intent, CC, current follow-up stage, age group, course level, channel source - Landing Page, channel source - App, user status, sales consultation booking, booking outbound call, registration date range.</li><li>Toolbar buttons: <strong>Reset filters</strong>, <strong>Import leads</strong>, <strong>Download data</strong>.</li></ul>
+<h3>Team lead capabilities</h3>
+<p>After logging in, a Sales Lead (销售组长) sees a notice: "You can view and reassign follow-up leads of all sales reps in your team (within your business line scope)", and can use <strong>Assignment &amp; auto-release settings</strong> in the top-right corner (see A-02).</p><p class="updated">Last updated 2026-11-10</p></article><article id="S-01" data-roles="Sales Rep|Sales Lead"><div class="arthead"><span class="nid">S-01</span><h2>How to Claim a New Lead</h2></div><div class="badges"><span class="badge">Sales Rep</span><span class="badge">Sales Lead</span></div><p class="artsum">Claim a lead pending follow-up from the Lead Pool tab in the Sales Center.</p><h3>Steps</h3>
+<ol><li>Entry: Sales Management (销售管理) → Sales Center (销售中心) → <strong>Lead Pool (公海)</strong> tab.</li><li>Use filters (筛选器) to narrow the scope (country, purchase intent, age group, channel source, etc.), or search directly by phone number / user ID / name.</li><li>Click <strong>Claim &amp; Follow up (领取跟进)</strong> on the target row.</li><li>Check My Follow-ups (我的跟进) to confirm the customer is now assigned to you.</li></ol>
+<h3>How leads enter the Lead Pool</h3>
+<ul><li>Registered users who do not match any assignment weight enter Pending claim (the Lead Pool).</li><li>Leads that have been under follow-up for over 30 days without payment, or that were manually returned, go back to the Lead Pool.</li></ul>
+<h3>Confirm completion</h3>
+<p>The customer appears in My Follow-ups, and the Lead Pool count decreases accordingly.</p>
+<h3>Notes</h3>
+<ul><li>Do not claim customers that are not yours to handle.</li><li>The purchase intent field (Interested / Not interested / Not set) helps you prioritize high-intent leads.</li></ul>
+<h3>Screenshot</h3>
+<p><img src="../images/S-01-pool.png" alt="Lead Pool tab" loading="lazy"></p><p class="updated">Last updated 2026-11-10</p></article><article id="S-02" data-roles="Sales Rep|Sales Lead"><div class="arthead"><span class="nid">S-02</span><h2>How to Make an Outbound Call and Log a Call Summary</h2></div><div class="badges"><span class="badge">Sales Rep</span><span class="badge">Sales Lead</span></div><p class="artsum">Click Dial in the Sales Center to start an outbound call, then complete and save the call summary after hanging up; first-time users must finish phone bar setup.</p><h3>Steps</h3>
+<ol><li>Entry: Sales Management (销售管理) → Sales Center (销售中心) → <strong>My Follow-ups (我的跟进)</strong> (or Paid (已付费)) tab.</li><li>After verifying customer information, click <strong>Dial (拨号)</strong> on the row to start the outbound call.</li><li>After the call ends, complete the call summary and purchase intent, then save.</li><li>Check Call Records (通话记录) to verify.</li></ol>
+<h3>System behavior (original page text)</h3>
+<blockquote class="note">The outbound call system is lightly integrated with the CRM: the agent clicks a number to start the call, fills in the call summary after hanging up, and the system automatically files it into the customer profile and sales follow-up records.</blockquote>
+<h3>Confirm completion</h3>
+<p>The call appears in both Call Records and the customer timeline.</p>
+<h3>Notes</h3>
+<ul><li>Call outcomes are recorded automatically by the system; <strong>an unsaved summary does not mean the call is logged</strong>.</li><li>The system does not support manual phone number entry; outbound calls must be initiated via the in-row <strong>Dial</strong> action.</li></ul>
+<h3>First-time call setup</h3>
+<blockquote class="note">Required once, only for sales reps logging in to the phone bar and making an outbound call for the first time.</blockquote>
+<ol><li>Log in on the phone bar and select the <strong>Web</strong> mode.</li><li>"Select caller ID rule" → <strong>Dynamic caller ID plan matching → Match by country</strong>.</li></ol><p class="updated">Last updated 2026-11-10</p></article><article id="S-03" data-roles="Sales Rep|Sales Lead"><div class="arthead"><span class="nid">S-03</span><h2>How to Record a Follow-up</h2></div><div class="badges"><span class="badge">Sales Rep</span><span class="badge">Sales Lead</span></div><p class="artsum">Use the in-row More → Update follow-up in My Follow-ups to log customer feedback, next actions, and callback time in the CRM.</p><h3>Steps</h3>
+<ol><li>Entry: Sales Management (销售管理) → Sales Center (销售中心) → <strong>My Follow-ups (我的跟进)</strong> tab.</li><li>Find the customer and click <strong>More (更多) → Update follow-up (更新跟进)</strong>.</li><li>Fill in customer feedback, next action, and callback time.</li><li>Save and check the timeline.</li></ol>
+<h3>Confirm completion</h3>
+<p>The latest note and last updated time are refreshed.</p>
+<h3>Notes</h3>
+<ul><li>Notes must be understandable to the next colleague.</li><li>The in-row More menu in My Follow-ups also offers: <strong>Trial Lesson Report (试听课报告)</strong>, <strong>Reassign lead (重新分配线索)</strong> (team leads), <strong>Add membership duration (添加会员时长)</strong>.</li><li>Leads with no follow-up records for a long time are auto-released (掉库) automatically (7200 minutes after claiming by default, see A-02); updating follow-ups promptly is how you keep your leads.</li></ul>
+<h3>Screenshot</h3>
+<p><img src="../images/S-00-myfollow.png" alt="My Follow-ups tab" loading="lazy"></p><p class="updated">Last updated 2026-11-10</p></article><article id="S-04" data-roles="Sales Lead|Super Admin"><div class="arthead"><span class="nid">S-04</span><h2>How to Reassign a Lead or Return It to the Lead Pool</h2></div><div class="badges"><span class="badge">Sales Lead</span><span class="badge adm">Super Admin</span></div><p class="artsum">Sales leads can hand over leads via More → Reassign lead in My Follow-ups; returning a lead to the Lead Pool requires a reason.</p><h3>Steps</h3>
+<ol><li>Entry: Sales Management (销售管理) → Sales Center (销售中心) → <strong>My Follow-ups (我的跟进)</strong> tab.</li><li><strong>Reassign (重新分配)</strong>: click <strong>More (更多) → Reassign lead (重新分配线索)</strong>, select the new sales rep, and confirm.</li><li><strong>Return to Lead Pool (退回公海)</strong>: choose Return in the More menu, fill in the return reason, and confirm.</li></ol>
+<h3>Confirm completion</h3>
+<p>The timeline shows the handover or return record; the transferred lead disappears from My Follow-ups.</p>
+<h3>Notes</h3>
+<ul><li>The return reason must be written clearly; after a return, the lead must be claimed manually again.</li><li>Team leads can view and reassign follow-up leads of <strong>all sales reps in their team (within their business line scope)</strong>; regular sales reps have no reassignment permission.</li><li>The in-row menu for Paid users has no Return to Lead Pool option.</li><li>Leads unpaid for more than 30 days are auto-reclaimed by the system; no manual action is needed.</li></ul>
+<h3>Screenshot</h3>
+<p><img src="../images/S-00-myfollow.png" alt="My Follow-ups tab" loading="lazy"></p><p class="updated">Last updated 2026-11-10</p></article><article id="S-05" data-roles="Sales Rep|Sales Lead"><div class="arthead"><span class="nid">S-05</span><h2>How to View Call Records and Recordings</h2></div><div class="badges"><span class="badge">Sales Rep</span><span class="badge">Sales Lead</span></div><p class="artsum">Review outbound call records by customer or call outcome in the Call Records tab of the Sales Center, with playback of recordings and transcript download.</p><h3>Steps</h3>
+<ol><li>Entry: Sales Management (销售管理) → Sales Center (销售中心) → <strong>Call Records (通话记录)</strong> tab.</li><li>Search by user ID / name / login account, or filter by country, <strong>call outcome</strong>, outbound call agent email, and time range.</li><li>Verify: call start time, user ID, name, phone number, call outcome, duration, Recording (录音), Transcript (文字稿), and follow-up record for this call.</li><li>For calls marked Connected (已接通), click <strong>Play recording (播放录音)</strong>; where a transcript exists, click <strong>Download transcript (下载文字稿)</strong>.</li></ol>
+<h3>Field notes</h3>
+<ul><li><strong>Call outcome</strong>: Connected (已接通) / No answer (无人接听), etc.</li><li><strong>Recording</strong>: shows Play recording or Syncing (recordings of recently ended calls need time to sync).</li><li><strong>Transcript</strong>: shows Download transcript or Recording not yet available.</li></ul>
+<h3>Confirm completion</h3>
+<p>You can locate the target call and decide the next step.</p>
+<h3>Notes</h3>
+<ul><li>Recordings of calls that just ended may show Syncing; refresh later.</li><li>Regular sales reps can usually view only their own call records.</li></ul>
+<h3>Screenshot</h3>
+<p><img src="../images/S-05-callrecords.png" alt="Call Records tab" loading="lazy"></p><p class="updated">Last updated 2026-11-10</p></article><article id="U-00" data-roles="Sales Rep|Sales Lead|Admin|Super Admin"><div class="arthead"><span class="nid">U-00</span><h2>Users and Orders Management Overview</h2></div><div class="badges"><span class="badge">Sales Rep</span><span class="badge">Sales Lead</span><span class="badge adm">Admin</span><span class="badge adm">Super Admin</span></div><p class="artsum">Entry points and manual index for the two modules: user management (User List) and order management (Order Center).</p><h3>Manual Index</h3>
+<table><thead><tr><th>Page</th><th>Manual</th><th>Common Operations</th></tr></thead><tbody><tr><td>User Management (用户管理) → User List (用户列表)</td><td>U-01</td><td>Find users, edit information, add membership, resend verification code, export</td></tr><tr><td>Order Management (订单管理) → Order Center (订单中心)</td><td>O-01</td><td>Query orders (PO/WEB prefixes), filter statuses, export</td></tr></tbody></table>
+<p>Data linkage: user pays → user status becomes "Paid" → the lead automatically leaves the Sales Center (S-00) → the order can be found in the Order Center (O-01).</p><p class="updated">Last updated 2026-11-10</p></article><article id="U-01" data-roles="Sales Rep|Sales Lead|Admin|Super Admin"><div class="arthead"><span class="nid">U-01</span><h2>Find Users and Maintain User Information</h2></div><div class="badges"><span class="badge">Sales Rep</span><span class="badge">Sales Lead</span><span class="badge adm">Admin</span><span class="badge adm">Super Admin</span></div><p class="artsum">Find users by criteria in the User Center, resend SMS verification codes, export the user list, and use row actions (edit information / add membership / edit trial lesson level).</p><h3>Steps</h3>
+<ol><li>Entry: User Management (用户管理) → <strong>User List (用户列表)</strong> (page title is "User Center (用户中心)").</li><li>Search by User ID / Name / Login Account, or filter by user type, registration method, channel source - landing page, channel source - App, country, and user status.</li><li>To resend a verification code, click the refresh button in the "SMS Verification Code (短信验证码)" column of that row.</li><li>The row <strong>Actions (操作)</strong> menu provides three options: <strong>Edit Information (修改信息)</strong>, <strong>Add Membership (添加会员)</strong>, and <strong>Edit Trial Lesson Level (修改试听课等级)</strong>.</li><li>Click <strong>Export (导出)</strong> when bulk data is needed.</li></ol>
+<h3>Field Reference</h3>
+<ul><li><strong>User status</strong>: not paid, no trial / not paid, in trial / paid, etc.</li><li><strong>User type</strong>: registered user (正式用户) / guest user (游客) (guest users have no login account and no row actions).</li><li><strong>Registration method</strong>: mobile number, etc.; age range and course level (e.g. 6–8, L1/L2) come from user learning data.</li></ul>
+<h3>Completion Check</h3>
+<p>After editing information or adding membership, the list fields refresh immediately.</p>
+<h3>Notes</h3>
+<ul><li>Customer mobile numbers are sensitive information; handle them with care (see A-03).</li><li>The export function is subject to permission and compliance requirements; exported data is for business use only.</li></ul>
+<h3>Screenshots</h3>
+<p><img src="../images/U-01-userlist.png" alt="User Center" loading="lazy"></p><p class="updated">Last updated 2026-11-10</p></article>
+  </main>
+</div>
+<script>
+(function(){
+var chips=document.querySelectorAll('.chip[data-role]');
+var items=document.querySelectorAll('.navitem[data-target]');
+var arts=document.querySelectorAll('article[data-roles]');
+var emptyTip=document.getElementById('empty-tip');
+var ALL=document.body.dataset.all;
+var curRole=ALL, kw='';
+function apply(){
+  var visible=0;
+  arts.forEach(function(a){
+    var roles=(a.dataset.roles||'').trim().split(/\s*\|\s*/);
+    var okRole=(curRole===ALL)||roles.indexOf(curRole)>=0;
+    var okKw=!kw||a.textContent.toLowerCase().indexOf(kw)>=0;
+    var show=okRole&&okKw;
+    a.classList.toggle('hidden',!show);
+    if(show)visible++;
+  });
+  var navByTarget={};
+  items.forEach(function(n){navByTarget[n.dataset.target]=n;});
+  arts.forEach(function(a){
+    var n=navByTarget[a.id];
+    if(n)n.classList.toggle('hidden',a.classList.contains('hidden'));
+  });
+  document.querySelectorAll('.navgroup').forEach(function(g){
+    var any=g.querySelector('.navitem:not(.hidden)');
+    g.classList.toggle('hidden',!any);
+  });
+  emptyTip.style.display=visible?'none':'block';
+}
+chips.forEach(function(c){c.addEventListener('click',function(){
+  chips.forEach(function(x){x.classList.remove('on')});
+  c.classList.add('on');curRole=c.dataset.role;apply();
+});});
+document.getElementById('q').addEventListener('input',function(e){
+  kw=e.target.value.trim().toLowerCase();apply();
+});
+apply();
+})();
+</script>
+</body>
+</html>

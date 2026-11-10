@@ -1,0 +1,56 @@
+{
+  "current": "1.1.0",
+  "releases": [
+    {
+      "version": "1.1.0",
+      "label": "使用手册整体优化",
+      "summary": "新增登录与角色导航，重构首页和移动端目录；补齐用户、订单、销售、看板说明，移除权限与外呼页面骨架内容。",
+      "released_at": "2026-11-10",
+      "changed_pages": [
+        "A-03",
+        "A-04",
+        "D-01",
+        "G-00",
+        "O-01",
+        "S-00",
+        "U-00",
+        "U-01"
+      ],
+      "prd_urls": [
+        "https://qjphu5vphyf4.jp.larksuite.com/docx/IcXHdLUynohTrOx15bRjomuFpwE",
+        "https://qjphu5vphyf4.jp.larksuite.com/docx/Cl9EdQd0ZotT49xyer5jy03jpIc"
+      ]
+    },
+    {
+      "version": "1.0.0",
+      "label": "初始基线",
+      "summary": "完成当前中英文 CRM 使用手册接管，建立不可覆盖的版本快照与历史版本入口。",
+      "released_at": "2026-11-10",
+      "changed_pages": [
+        "A-01",
+        "A-02",
+        "A-03",
+        "A-04",
+        "A-05",
+        "A-06",
+        "D-01",
+        "M-00",
+        "M-01",
+        "M-02",
+        "M-03",
+        "M-04",
+        "M-05",
+        "O-01",
+        "S-00",
+        "S-01",
+        "S-02",
+        "S-03",
+        "S-04",
+        "S-05",
+        "U-00",
+        "U-01"
+      ],
+      "prd_urls": []
+    }
+  ]
+}

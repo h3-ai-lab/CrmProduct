@@ -1,0 +1,420 @@
+{
+  "zh": [
+    {
+      "id": "A-01",
+      "title": "角色与权限配置总览",
+      "module": "系统管理",
+      "updated": "2026-11-10",
+      "summary": "系统配置页面包含角色权限、成员账号、操作日志三个页签；定义每个角色可访问的功能模块及操作级别，并为成员账号分配角色与数据权限（业务线）范围。",
+      "content_hash": "041d55f89d8310db8cfdabf79e7a8f814162b24e2b233175e49f95dcc037e74f",
+      "src": "docs/system/A-01.md"
+    },
+    {
+      "id": "A-02",
+      "title": "线索分配与掉库规则配置",
+      "module": "系统管理",
+      "updated": "2026-11-10",
+      "summary": "在销售中心右上角「分配与掉库设置」中，按业务线配置掉库规则与销售线索分配比例。",
+      "content_hash": "60f9eaaa66c87ee43238554e5c570b10e9124c6bff38ba2b0c050e94abb6f3d0",
+      "src": "docs/system/A-02.md"
+    },
+    {
+      "id": "A-03",
+      "title": "权限、数据范围与敏感操作",
+      "module": "系统管理",
+      "updated": "2026-11-10",
+      "summary": "理解角色权限、业务线数据范围和敏感操作要求，判断成员为什么看不到菜单或数据。",
+      "content_hash": "831507b157d99f0b850b7e4bb1021642fced90540110e72467485716328fbe87",
+      "src": "docs/system/A-03.md"
+    },
+    {
+      "id": "A-04",
+      "title": "外呼准备、线路与坐席排障",
+      "module": "销售管理",
+      "updated": "2026-11-10",
+      "summary": "发起外呼前确认坐席和线路；出现无法拨号、录音同步或接通率异常时，按本页逐项排查。",
+      "content_hash": "f520d49eba2b733a61648817709e062d9250e1c4d931c8a68a732fe9bf8d5694",
+      "src": "docs/system/A-04.md"
+    },
+    {
+      "id": "A-05",
+      "title": "查询系统配置操作日志",
+      "module": "系统管理",
+      "updated": "2026-11-10",
+      "summary": "在系统配置 → 操作日志页签，按模块、操作人、时间范围追溯谁在什么时间改了什么配置。",
+      "content_hash": "1362a502bcee3cda1e15766503952102a70c03ee41a97b2e3d328d0bc994f7d3",
+      "src": "docs/system/A-05.md"
+    },
+    {
+      "id": "A-06",
+      "title": "管理成员账号与绑定外呼",
+      "module": "系统管理",
+      "updated": "2026-11-10",
+      "summary": "在系统配置 → 成员账号页签新增/编辑成员、分配角色与业务线、启用停用账号，并为坐席绑定外呼。",
+      "content_hash": "3c099b5eb8470bba72282740656e59586990d3eda570a5234c5b669bc9cb4c38",
+      "src": "docs/system/A-06.md"
+    },
+    {
+      "id": "D-01",
+      "title": "查看管理看板与转化漏斗",
+      "module": "管理看板",
+      "updated": "2026-11-10",
+      "summary": "按业务线、CC 和日期查看同一注册批次的六环转化、销售跟进和支付结果，并用统计口径解释数字。",
+      "content_hash": "ce80c04e4ab5d5ca4404fca9e62e67952cf7e9cd72d77c485064facadca7080f",
+      "src": "docs/dashboard/D-01.md"
+    },
+    {
+      "id": "G-00",
+      "title": "快速开始：登录、角色与常用任务",
+      "module": "开始使用",
+      "updated": "2026-11-10",
+      "summary": "首次进入 CRM 先完成登录，再按角色选择常用任务；同时了解业务线范围和敏感数据操作的基本要求。",
+      "content_hash": "4ac8c29770062c01410d426517460d302114ae23f899694b8d97ddf3a4a46fc3",
+      "src": "docs/start/G-00.md"
+    },
+    {
+      "id": "M-00",
+      "title": "营销中心配置总览",
+      "module": "营销中心",
+      "updated": "2026-11-10",
+      "summary": "营销中心五步配置链路：渠道 → SKU → 渠道 SKU 关联 → 落地页 → 皮肤，支撑投放归因与售卖。",
+      "content_hash": "f5b8e53647e48773bbefbba6f54dbc931f64e6165b2a020f02f4779204714324",
+      "src": "docs/marketing/M-00.md"
+    },
+    {
+      "id": "M-01",
+      "title": "新增与维护渠道",
+      "module": "营销中心",
+      "updated": "2026-11-10",
+      "summary": "先维护业务线下的渠道类型，再建立具体的销售、KOL、Meta、Google 等渠道；渠道码由系统生成。",
+      "content_hash": "04a251df82911f36c623c3fa0fed70dcde1cfe820db315d02e20d5051b2935ea",
+      "src": "docs/marketing/M-01.md"
+    },
+    {
+      "id": "M-02",
+      "title": "查询可售 SKU",
+      "module": "营销中心",
+      "updated": "2026-11-10",
+      "summary": "SKU 由商品系统统一维护；营销中心仅用于查询和选择已有商品。",
+      "content_hash": "0bb0481e08112e66d7ac5fbde3f546e33db7e8c41768f5dddd4fe9e1f1651516",
+      "src": "docs/marketing/M-02.md"
+    },
+    {
+      "id": "M-03",
+      "title": "配置渠道 SKU 关联与售卖价格",
+      "module": "营销中心",
+      "updated": "2026-11-10",
+      "summary": "每个渠道仅维护一套关联规则；在同一行查看每个 SKU 的售卖规则与应付金额，可配置折扣或立减。",
+      "content_hash": "e60e876f3975c15adf79e3121b62338a7f0aee472302050ecb8c51596d114150",
+      "src": "docs/marketing/M-03.md"
+    },
+    {
+      "id": "M-04",
+      "title": "创建落地页与获取投放链接",
+      "module": "营销中心",
+      "updated": "2026-11-10",
+      "summary": "先选择页面类型：获客落地页仅关联渠道；支付落地页再关联 SKU，并可选择是否使用优惠。",
+      "content_hash": "345bc7bc50fd6193c5ce211979c246f2579f1a291de3bab3fffd237454f9436c",
+      "src": "docs/marketing/M-04.md"
+    },
+    {
+      "id": "M-05",
+      "title": "配置落地页皮肤",
+      "module": "营销中心",
+      "updated": "2026-11-10",
+      "summary": "按业务线配置落地页皮肤；提交后才发布并生成模板 ID，供落地页管理选择。",
+      "content_hash": "feab7b267f065869c2640cda7967a4415a1061652e785b189c5c06ef7acbcbed",
+      "src": "docs/marketing/M-05.md"
+    },
+    {
+      "id": "O-01",
+      "title": "查询订单、核对状态与导出",
+      "module": "用户与订单",
+      "updated": "2026-11-10",
+      "summary": "在订单中心按订单、用户、商品和优惠码定位订单，核对支付、用户状态和价格，并按筛选范围导出。",
+      "content_hash": "014d013c06e70c5bdcd8d9118a31deff42ee14ed7c5b8ac86eb29c57b0dc768b",
+      "src": "docs/user/O-01.md"
+    },
+    {
+      "id": "S-00",
+      "title": "销售中心总览与线索流转规则",
+      "module": "销售管理",
+      "updated": "2026-11-10",
+      "summary": "在销售中心查看公海、我的跟进、已付费和通话记录；理解线索分配、领取、掉库、跟进和续费留存规则。",
+      "content_hash": "a155a17a15ecb9cf43a7163e3eb0cc33b0d539ca5978e9f1a19688b1eed8f934",
+      "src": "docs/sales/S-00.md"
+    },
+    {
+      "id": "S-01",
+      "title": "如何领取一条新线索",
+      "module": "销售管理",
+      "updated": "2026-11-10",
+      "summary": "从销售中心「公海」页签领取待跟进线索。",
+      "content_hash": "9f09eee3422d97d1fedc27545dcc15d06cdcb573d13d5dec2faea5834e88a06a",
+      "src": "docs/sales/S-01.md"
+    },
+    {
+      "id": "S-02",
+      "title": "如何外呼并留下通话小结",
+      "module": "销售管理",
+      "updated": "2026-11-10",
+      "summary": "在销售中心点击「拨号」发起外呼，挂断后补全通话小结并保存；首次使用需完成电话条设置。",
+      "content_hash": "064598b2c9f49264cef9ba635954f2fea6973f47c4f48cb83c124918f0fa76c4",
+      "src": "docs/sales/S-02.md"
+    },
+    {
+      "id": "S-03",
+      "title": "如何记录一次跟进",
+      "module": "销售管理",
+      "updated": "2026-11-10",
+      "summary": "在「我的跟进」通过行内「更多 → 更新跟进」，把客户反馈、下一步动作和回访时间留在 CRM。",
+      "content_hash": "da62c3be805d5f442b9661a9fdcfdf4680777326f4d332ea6c6c29f032a8a00c",
+      "src": "docs/sales/S-03.md"
+    },
+    {
+      "id": "S-04",
+      "title": "如何转分配或退回公海",
+      "module": "销售管理",
+      "updated": "2026-11-10",
+      "summary": "销售组长可在「我的跟进」通过「更多 → 重新分配线索」交接线索；退回公海需填写原因。",
+      "content_hash": "496b98af48b11b61c48540c136dc2ec10132f078b651490854953e4024944b93",
+      "src": "docs/sales/S-04.md"
+    },
+    {
+      "id": "S-05",
+      "title": "如何查看通话记录与录音",
+      "module": "销售管理",
+      "updated": "2026-11-10",
+      "summary": "在销售中心「通话记录」页签按客户或通话结果回看外呼记录，可播放录音、下载文字稿。",
+      "content_hash": "21aa11e3c10160313aceb2e387ed3dc9c70c1aa97affe85c270149683a87c4fb",
+      "src": "docs/sales/S-05.md"
+    },
+    {
+      "id": "U-00",
+      "title": "用户与订单管理总览",
+      "module": "用户与订单",
+      "updated": "2026-11-10",
+      "summary": "用户管理（用户列表）与订单管理（订单中心）两个模块的入口与手册索引。",
+      "content_hash": "b5df618882cbb5a25b4566e06d0355f5e91c7cf17ceced9406395ddbe01f7631",
+      "src": "docs/user/U-00.md"
+    },
+    {
+      "id": "U-01",
+      "title": "查找用户与处理用户问题",
+      "module": "用户与订单",
+      "updated": "2026-11-10",
+      "summary": "在用户中心按用户、渠道、国家和状态查找用户，查看账号信息、短信验证码和当前学习阶段，并执行有权限的资料或会员操作。",
+      "content_hash": "815a3cc5359cfaca48de9033c97d5142fb18a70da988597a03b5edb37cb1ec2e",
+      "src": "docs/user/U-01.md"
+    }
+  ],
+  "en": [
+    {
+      "id": "A-01",
+      "title": "Roles and Permissions Overview",
+      "module": "System Admin",
+      "updated": "2026-11-10",
+      "summary": "The System Configuration page contains the Roles & Permissions, Member Accounts, and Audit Log tabs; it defines the modules and operation levels each role can access, and assigns roles and data scope (business lines) to member accounts.",
+      "content_hash": "92986e28a83e56b1e0b644b15ec896507ed4ee45b0634133a7bfabe1942e8c90",
+      "src": "docs/en/system/A-01.md"
+    },
+    {
+      "id": "A-02",
+      "title": "Lead Assignment and Auto-Release Rules",
+      "module": "System Admin",
+      "updated": "2026-11-10",
+      "summary": "In Distribution & Auto-Release Settings at the top right of the Sales Center, configure auto-release rules and lead allocation ratios per business line.",
+      "content_hash": "93d3922a15eadede0fc751cd6d72575b8aac5a0602766ae432ff460adb2c9b3b",
+      "src": "docs/en/system/A-02.md"
+    },
+    {
+      "id": "A-03",
+      "title": "Roles, Data Scope and Sensitive Operations",
+      "module": "System Admin",
+      "updated": "2026-11-10",
+      "summary": "Understand how roles, business-line scope and sensitive-operation permissions determine what a member can see and do.",
+      "content_hash": "3153250fef63c5d919b9ae49c406a0d016b683fcc03e6b71535e0a7a2253b172",
+      "src": "docs/en/system/A-03.md"
+    },
+    {
+      "id": "A-04",
+      "title": "Outbound Readiness, Routes and Seat Troubleshooting",
+      "module": "Sales",
+      "updated": "2026-11-10",
+      "summary": "Confirm the seat and route before calling, then troubleshoot dialling, recording sync and connection issues.",
+      "content_hash": "5d1bf1e57187be2b4647a7f1dab6753d56f26ef36f88c305a436b22c4c657bd7",
+      "src": "docs/en/system/A-04.md"
+    },
+    {
+      "id": "A-05",
+      "title": "Querying the System Configuration Audit Log",
+      "module": "System Admin",
+      "updated": "2026-11-10",
+      "summary": "In the System Configuration → Audit Log tab, trace who changed which configuration and when by module, operator, and time range.",
+      "content_hash": "6550c05de859aa4f01dde681a48c7af2e29f722e23f46ae8473253b8b4144817",
+      "src": "docs/en/system/A-05.md"
+    },
+    {
+      "id": "A-06",
+      "title": "Managing Member Accounts and Binding Outbound Calling",
+      "module": "System Admin",
+      "updated": "2026-11-10",
+      "summary": "In the System Configuration → Member Accounts tab, add/edit members, assign roles and business lines, enable or disable accounts, and bind outbound calling for agents.",
+      "content_hash": "7b9d1d7c79a9cac14d65f94bee020228ebf9d1587ac1c857a71b7596d5f70785",
+      "src": "docs/en/system/A-06.md"
+    },
+    {
+      "id": "D-01",
+      "title": "View the Dashboard and Conversion Funnel",
+      "module": "Dashboard",
+      "updated": "2026-11-10",
+      "summary": "Review the six-stage conversion funnel, follow-up performance and payment results for a registration cohort by business line, CC and date.",
+      "content_hash": "e0a3b3aa681498b1d76e3b77f17aa6061b584439bc8fbe01b959ccf361497259",
+      "src": "docs/en/dashboard/D-01.md"
+    },
+    {
+      "id": "G-00",
+      "title": "Get Started: Sign In, Roles and Common Tasks",
+      "module": "Getting Started",
+      "updated": "2026-11-10",
+      "summary": "Sign in for the first time, choose the right task path for your role, and follow the basic rules for business-line scope and sensitive data.",
+      "content_hash": "5c8b68b9cdea716b507b1542613343619989bfafe9ab6fbeeacb6698b314ad6f",
+      "src": "docs/en/start/G-00.md"
+    },
+    {
+      "id": "M-00",
+      "title": "Marketing Center Setup Overview",
+      "module": "Marketing",
+      "updated": "2026-11-10",
+      "summary": "The five-step Marketing Center setup chain: Channel → SKU → Channel SKU association → Landing Page → Skin, supporting attribution and selling.",
+      "content_hash": "a3c0e848e3116b73a91d99ff1a5904ad7e995b21561d66034b337acc61c55127",
+      "src": "docs/en/marketing/M-00.md"
+    },
+    {
+      "id": "M-01",
+      "title": "Add and Maintain Channels",
+      "module": "Marketing",
+      "updated": "2026-11-10",
+      "summary": "Maintain channel types for business lines first, then create specific Sales, KOL, Meta, Google and other channels; channel codes are system-generated.",
+      "content_hash": "461c1bfc60004f21bdf977213a34d3d5c7a0206dff105041189e1f3865d9bff9",
+      "src": "docs/en/marketing/M-01.md"
+    },
+    {
+      "id": "M-02",
+      "title": "Query Sellable SKUs",
+      "module": "Marketing",
+      "updated": "2026-11-10",
+      "summary": "SKUs are maintained centrally by the product system; the Marketing Center is only used to query and select existing products.",
+      "content_hash": "48672509cc6b49dcc0625b7292239a917a44ff0fe46f2db5cbd1a339da6a2b3d",
+      "src": "docs/en/marketing/M-02.md"
+    },
+    {
+      "id": "M-03",
+      "title": "Configure Channel SKU Associations and Selling Prices",
+      "module": "Marketing",
+      "updated": "2026-11-10",
+      "summary": "Each channel maintains one set of association rules; view selling rules and payable amounts for each SKU in one row, with discount or instant-reduction options.",
+      "content_hash": "14e19301a6f06c1062782973971ee63cc468a7f3cd60d5d36b14246b326efc77",
+      "src": "docs/en/marketing/M-03.md"
+    },
+    {
+      "id": "M-04",
+      "title": "Create Landing Pages and Get Campaign Links",
+      "module": "Marketing",
+      "updated": "2026-11-10",
+      "summary": "Choose the page type first: acquisition landing pages link only to a channel; payment landing pages additionally link to SKUs, with an optional promo.",
+      "content_hash": "3d138b71a4f94536c34c630a35c8de4ca4f02183def0bbfb26fdc4048cb1ad19",
+      "src": "docs/en/marketing/M-04.md"
+    },
+    {
+      "id": "M-05",
+      "title": "Configure Landing Page Skins",
+      "module": "Marketing",
+      "updated": "2026-11-10",
+      "summary": "Configure landing page skins per business line; only after submission are they published and a template ID generated for selection in Landing Page Management.",
+      "content_hash": "d89a032341dbdee0eea769ca4fcd31a6cdaa91a1e055c5cb8ea5179d24ab3c97",
+      "src": "docs/en/marketing/M-05.md"
+    },
+    {
+      "id": "O-01",
+      "title": "Find Orders, Verify Status and Export",
+      "module": "Users & Orders",
+      "updated": "2026-11-10",
+      "summary": "Locate orders by order, user, product and promo code; verify payment, user status and price; export the current filtered set.",
+      "content_hash": "ccedbde89a7d9aa1de19b1c25b803cf9746d3340d7a37b8270f4bcc02119fe90",
+      "src": "docs/en/user/O-01.md"
+    },
+    {
+      "id": "S-00",
+      "title": "Sales Center Overview and Lead Flow Rules",
+      "module": "Sales",
+      "updated": "2026-11-10",
+      "summary": "Use Lead Pool, My Follow-ups, Paid and Call Records; understand assignment, claiming, auto-release, follow-up and renewal retention.",
+      "content_hash": "5f6f29a3e204e94a40533ccd2a9ac3d2ee3e4b8247aee3101e5e7ed42de86318",
+      "src": "docs/en/sales/S-00.md"
+    },
+    {
+      "id": "S-01",
+      "title": "How to Claim a New Lead",
+      "module": "Sales",
+      "updated": "2026-11-10",
+      "summary": "Claim a lead pending follow-up from the Lead Pool tab in the Sales Center.",
+      "content_hash": "9f9ab6aaf0011b50c19c0b1ff4dfa4b6f376d35569a6cc01d5b99fcc88d36251",
+      "src": "docs/en/sales/S-01.md"
+    },
+    {
+      "id": "S-02",
+      "title": "How to Make an Outbound Call and Log a Call Summary",
+      "module": "Sales",
+      "updated": "2026-11-10",
+      "summary": "Click Dial in the Sales Center to start an outbound call, then complete and save the call summary after hanging up; first-time users must finish phone bar setup.",
+      "content_hash": "f87dc1b27b4cfbc6531997212f72960a1b651e54d2348f617ed7fc25741b5351",
+      "src": "docs/en/sales/S-02.md"
+    },
+    {
+      "id": "S-03",
+      "title": "How to Record a Follow-up",
+      "module": "Sales",
+      "updated": "2026-11-10",
+      "summary": "Use the in-row More → Update follow-up in My Follow-ups to log customer feedback, next actions, and callback time in the CRM.",
+      "content_hash": "9b68032cbaec635726fcbdf3c57c3e36c92f9a8fe1cb320226548f01892a03f7",
+      "src": "docs/en/sales/S-03.md"
+    },
+    {
+      "id": "S-04",
+      "title": "How to Reassign a Lead or Return It to the Lead Pool",
+      "module": "Sales",
+      "updated": "2026-11-10",
+      "summary": "Sales leads can hand over leads via More → Reassign lead in My Follow-ups; returning a lead to the Lead Pool requires a reason.",
+      "content_hash": "24979c4c89fcaccda038f34fa83190f697848b72b4979c6e5cc84802039cc4a1",
+      "src": "docs/en/sales/S-04.md"
+    },
+    {
+      "id": "S-05",
+      "title": "How to View Call Records and Recordings",
+      "module": "Sales",
+      "updated": "2026-11-10",
+      "summary": "Review outbound call records by customer or call outcome in the Call Records tab of the Sales Center, with playback of recordings and transcript download.",
+      "content_hash": "2f1a9e0aea72926076934783d8eea1de1712a84d81907bc28f94bd4036fcc724",
+      "src": "docs/en/sales/S-05.md"
+    },
+    {
+      "id": "U-00",
+      "title": "Users and Orders Management Overview",
+      "module": "Users & Orders",
+      "updated": "2026-11-10",
+      "summary": "Entry points and manual index for the two modules: user management (User List) and order management (Order Center).",
+      "content_hash": "dd1f8b14ba744f17e81dbdb6e228430d8ce13f2360dae06d57aa5bfb38c64bd7",
+      "src": "docs/en/user/U-00.md"
+    },
+    {
+      "id": "U-01",
+      "title": "Find Users and Handle User Issues",
+      "module": "Users & Orders",
+      "updated": "2026-11-10",
+      "summary": "Find users by identity, channel, country and status; review account information, SMS codes and learning stage; perform permitted profile or membership actions.",
+      "content_hash": "ac1bfa219ae8c17c1bfae8285d3bbbb84f171f44a7264a529c1d1f9e4eb01465",
+      "src": "docs/en/user/U-01.md"
+    }
+  ]
+}
