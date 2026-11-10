@@ -6,7 +6,8 @@ This project owns the bilingual CRM handbook served at:
 
 The URL is a stable WorkBuddy preview mapped to `dist/`. Preserve it. Do not create a new preview URL or move the published entry file.
 
-The manual is maintained locally only. Do not add or restore GitHub, GitLab or other remote deployment workflows unless the user explicitly requests publishing.
+The public handbook is published to GitHub Pages from `h3-ai-lab/CrmProduct`.
+The current URL is `https://h3-ai-lab.github.io/CrmProduct/`.
 
 When the user announces a requirement is live:
 
@@ -16,7 +17,10 @@ When the user announces a requirement is live:
 4. Use official feature names and reflect current UI behavior. Do not document planned behavior as live.
 5. Build a new immutable release with `python3 build.py --release <version> ...`.
 6. Verify the stable current URL, the English page, the version history page, and the archived version.
-7. Report changed pages, version number, verification results, and unresolved issues.
+7. Commit and push to `main`.
+8. Wait for the Pages workflow to succeed.
+9. Verify the public home page, English page, version history and archived version.
+10. Report changed pages, version number, public URL, verification results, and unresolved issues.
 
 Version rules:
 

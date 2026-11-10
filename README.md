@@ -5,11 +5,14 @@
 > `dist/index.html`（中文）+ `dist/en/index.html`（英文），侧栏可互相切换语言。
 > 功能：按模块分组导航、角色筛选（销售专员/组长、管理员/超管）、全文搜索、打印样式。
 
+公网入口：`https://h3-ai-lab.github.io/CrmProduct/`
+
 ## 目录结构
 
 ```
 crm-manual/
 ├── build.py              # 构建脚本（纯 Python 标准库，无需安装依赖）
+├── .github/workflows/    # GitHub Pages 自动构建与部署
 ├── releases/             # 不可覆盖的版本快照和版本索引
 ├── docs/                 # ★ 中文内容源（只改这里）
 │   ├── _template.md      # 新手册模板：复制 → 改名 → 填内容
@@ -77,15 +80,17 @@ python3 build.py --release 1.1.0 \
 
 完整维护规范见 [MAINTENANCE.md](MAINTENANCE.md)。
 
-## 本地发布
+## 发布
 
-当前只维护本地站点，不配置 GitHub、GitLab 或其他远端发布：
+本地构建：
 
 ```bash
 python3 build.py
 ```
 
-WorkBuddy 继续直接读取 `dist/`，现有本地预览链接保持不变。
+推送到 `main` 后，GitHub Actions 会执行源稿检查、构建并发布到 GitHub Pages。
+
+WorkBuddy 本地预览继续直接读取 `dist/`，本地入口保持不变。
 
 ## 发布前隐私检查清单 ⚠️
 

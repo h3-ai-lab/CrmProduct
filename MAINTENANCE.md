@@ -8,7 +8,11 @@
 
 WorkBuddy 将 `/preview/p1/` 映射到 `crm-manual/dist/`，服务会实时读取文件。更新手册只需重建 `dist/`，不要修改端口、预览 token 或入口路径。
 
-当前不维护任何 GitHub、GitLab 或其他远端发布流程。
+公网发布使用 GitHub Pages：
+
+- 仓库：`h3-ai-lab/CrmProduct`
+- 地址：`https://h3-ai-lab.github.io/CrmProduct/`
+- 推送 `main` 后由 `.github/workflows/pages.yml` 自动构建和部署。
 
 ## 每次需求上线
 
@@ -20,8 +24,9 @@ WorkBuddy 将 `/preview/p1/` 映射到 `crm-manual/dist/`，服务会实时读�
 4. 同时更新中文 `docs/` 和英文 `docs/en/`。
 5. 执行源稿检查，确认页面、角色筛选、搜索、图片和语言切换。
 6. 确认版本号、发布日期、发布说明和 PRD 链接。
-7. 固化版本并发布到当前地址。
-8. 验证当前版本、英文版本、历史索引和本版本归档都可访问。
+7. 固化版本并重建 `dist/`。
+8. 提交并推送到 GitHub `main`。
+9. 等待 Pages 部署完成，验证当前版本、英文版本、历史索引和本版本归档。
 
 ## 发布命令
 
@@ -92,4 +97,5 @@ crm-manual/
 - [ ] 旧版本内容仍可访问且没有被覆盖。
 - [ ] 固定入口 `/preview/p1/index.html` 可访问。
 - [ ] 构建脚本无报错，中英文文档编号一致。
+- [ ] GitHub Pages 最新部署成功，公网中英文和历史版本返回正常。
 
