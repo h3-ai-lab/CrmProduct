@@ -6,12 +6,12 @@ This project owns the bilingual CRM handbook served at:
 
 The URL is a stable WorkBuddy preview mapped to `dist/`. Preserve it. Do not create a new preview URL or move the published entry file.
 
-GitLab Pages is the public deployment target. Keep `.gitlab-ci.yml` working and verify the Pipeline result after pushing the default branch.
+The manual is maintained locally only. Do not add or restore GitHub, GitLab or other remote deployment workflows unless the user explicitly requests publishing.
 
 When the user announces a requirement is live:
 
 1. Read the linked PRD and the current Chinese/English manual pages.
-2. Compare the live product behavior with the manual; identify affected pages using `audit/route-manifest.json`.
+2. Compare the live product behavior with the manual; identify affected pages from the current menu structure and screenshots.
 3. Update both `docs/` and `docs/en/` in the same change. A feature is not complete if only one language is updated.
 4. Use official feature names and reflect current UI behavior. Do not document planned behavior as live.
 5. Build a new immutable release with `python3 build.py --release <version> ...`.

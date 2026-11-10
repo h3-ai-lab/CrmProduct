@@ -1,6 +1,6 @@
 # Dino CRM 使用手册（中英双语 · 内部文档项目）
 
-> 目标：CRM 每次功能迭代，手册同步更新、一条命令构建发布。
+> 目标：CRM 每次功能迭代，手册同步更新、一条命令构建本地站点。
 > 内容源 = `docs/`（中文）与 `docs/en/`（英文）下的 Markdown；构建产物 = 双站点：
 > `dist/index.html`（中文）+ `dist/en/index.html`（英文），侧栏可互相切换语言。
 > 功能：按模块分组导航、角色筛选（销售专员/组长、管理员/超管）、全文搜索、打印样式。
@@ -10,7 +10,6 @@
 ```
 crm-manual/
 ├── build.py              # 构建脚本（纯 Python 标准库，无需安装依赖）
-├── .gitlab-ci.yml        # 校验源稿并通过 GitLab Pages 发布
 ├── releases/             # 不可覆盖的版本快照和版本索引
 ├── docs/                 # ★ 中文内容源（只改这里）
 │   ├── _template.md      # 新手册模板：复制 → 改名 → 填内容
@@ -23,7 +22,7 @@ crm-manual/
 │   ├── user/             # 用户与订单 U/O 系列
 │   └── en/               # ★ 英文内容源（与中文一一对应）
 │       ├── start/ sales/ system/ marketing/ user/ dashboard/
-└── dist/                 # 构建产物（git 忽略，由 CI 生成）
+└── dist/                 # 构建产物（git 忽略，由 build.py 生成）
     ├── index.html        # 中文站
     ├── en/index.html     # 英文站
     ├── versions/         # 历史版本
@@ -54,9 +53,9 @@ summary: 一句话摘要
 
 1. **开发功能时**：在 `docs/`（中文）和 `docs/en/`（英文）找到对应模块，新增或修改手册。编号体系：D 看板 / S 销售 / A 系统管理 / M 营销 / U 用户 / O 订单。
 2. **功能验收标准包含一条：手册已更新**——没有手册的功能不算完成。
-3. **源稿核对**：`python3 build.py --check`，确认中英文编号、转换和页面内容无误。该命令不会修改当前公开站点。
+3. **源稿核对**：`python3 build.py --check`，确认中英文编号、转换和页面内容无误。该命令不会修改当前站点。
 4. **需求上线后固化版本**：使用 `python3 build.py --release <version> ...`，更新固定入口并生成历史快照。
-5. **提交并推送**：同时提交 `docs/` 与 `releases/`，CI 会根据最新固化版本重建站点。
+5. **提交到本地 Git**：同时提交 `docs/` 与 `releases/`，保留可追溯的本地版本历史。
 
 ## 版本与历史记录
 
@@ -78,32 +77,21 @@ python3 build.py --release 1.1.0 \
 
 完整维护规范见 [MAINTENANCE.md](MAINTENANCE.md)。
 
-## 发布到 GitLab Pages（首次）
+## 本地发布
 
-1. 在 GitLab 新建项目 `dino-crm-manual`。
-2. 添加 GitLab remote 并推送：
+当前只维护本地站点，不配置 GitHub、GitLab 或其他远端发布：
 
-   ```bash
-   git remote add gitlab git@gitlab.com:<namespace>/dino-crm-manual.git
-   git push -u gitlab main
-   ```
+```bash
+python3 build.py
+```
 
-3. 仓库根目录的 `.gitlab-ci.yml` 会自动检查源稿、构建并发布 `dist/`。
-4. 在 **Settings → Pages** 确认 Pages 已启用。
-5. 发布地址通常为：
-
-   `https://<namespace>.gitlab.io/dino-crm-manual/`
-
-   英文版在 `/en/`，历史版本在 `/versions/`。
-
-> 私有仓库的 Pages 访问权限取决于 GitLab 套餐和组织策略。需要匿名外部访问时，使用公开手册仓库；PRD 继续保持私有。
+WorkBuddy 继续直接读取 `dist/`，现有本地预览链接保持不变。
 
 ## 发布前隐私检查清单 ⚠️
 
 截图来自生产环境，其中**成员账号页与用户列表页含有员工邮箱和客户手机号**。对外发布前必须处理：
 
 - [ ] `docs/images/` 中的敏感截图已打码（`A-01-members.png`、`U-01-userlist.png` 重点检查）
-- [ ] 仓库可见性和 GitLab Pages 访问策略符合发布范围
 - [ ] 或改用内网部署：把 `dist/` 放入公司内网静态服务器
 
 ## 规划中的角色与编号体系

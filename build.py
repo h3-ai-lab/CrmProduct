@@ -739,7 +739,7 @@ def publish_current_from_release(release):
 def main():
     parser = argparse.ArgumentParser(description="构建 Dino CRM 双语使用手册")
     parser.add_argument("--release", help="固化并发布一个新的不可覆盖版本号")
-    parser.add_argument("--check", action="store_true", help="只校验当前源稿，不更新公开站点")
+    parser.add_argument("--check", action="store_true", help="只校验当前源稿，不更新当前站点")
     parser.add_argument("--label", default="", help="版本名称")
     parser.add_argument("--summary", default="", help="版本发布说明")
     parser.add_argument("--released-at", default="", help="发布日期 YYYY-MM-DD")
@@ -776,7 +776,7 @@ def main():
             )
         if {a["id"] for a in built["zh"]} != {a["id"] for a in built["en"]}:
             raise SystemExit("中英文手册编号不一致，检查失败。")
-        print("源稿检查通过；公开站点未修改。")
+        print("源稿检查通过；当前站点未修改。")
         return
 
     if not index["releases"]:

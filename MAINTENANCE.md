@@ -6,9 +6,9 @@
 
 `http://127.0.0.1:58078/preview/p1/index.html`
 
-WorkBuddy 将 `/preview/p1/` 映射到 `crm-manual/dist/`，服务会实时读取文件。更新手册只需重建 `dist/`，不要修改端口、预览 token 或对外入口。
+WorkBuddy 将 `/preview/p1/` 映射到 `crm-manual/dist/`，服务会实时读取文件。更新手册只需重建 `dist/`，不要修改端口、预览 token 或入口路径。
 
-对外发布使用 GitLab Pages：`.gitlab-ci.yml` 在默认分支执行中英文检查、重建 `dist/` 并发布。推送后必须验证 GitLab Pipeline 和 Pages 实际链接。
+当前不维护任何 GitHub、GitLab 或其他远端发布流程。
 
 ## 每次需求上线
 
