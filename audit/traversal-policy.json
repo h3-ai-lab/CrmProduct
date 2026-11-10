@@ -1,0 +1,62 @@
+{
+  "version": 1,
+  "mode": "read-only",
+  "baseUrl": "https://crm.dinoai.ai/dino-omnicenter",
+  "allowedActions": [
+    "open-route",
+    "expand-menu",
+    "switch-tab",
+    "open-filter-dropdown",
+    "view-readonly-details",
+    "read-dom",
+    "capture-screenshot"
+  ],
+  "forbiddenActionPatterns": [
+    "新增",
+    "创建",
+    "编辑",
+    "修改",
+    "保存",
+    "提交",
+    "删除",
+    "启用",
+    "停用",
+    "绑定",
+    "解绑",
+    "导入",
+    "导出",
+    "下载",
+    "拨号",
+    "发送",
+    "重发",
+    "领取",
+    "重新分配",
+    "退回",
+    "撤回",
+    "审批",
+    "同意",
+    "拒绝"
+  ],
+  "redact": [
+    "email",
+    "phone",
+    "userId",
+    "recordingUrl",
+    "cookie",
+    "authorization",
+    "accessToken",
+    "appSecret"
+  ],
+  "rawEvidenceDir": "audit/evidence/raw",
+  "publicReportDir": "audit/reports",
+  "stopConditions": [
+    "login-required",
+    "write-required",
+    "permission-request",
+    "payment-or-purchase",
+    "data-export-or-external-share",
+    "destructive-confirmation",
+    "rate-limited",
+    "session-expiring"
+  ]
+}

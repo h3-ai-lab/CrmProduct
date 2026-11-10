@@ -2,3 +2,5 @@ dist/
 .DS_Store
 *.pyc
 __pycache__/
+audit/.browser-profile/
+audit/evidence/raw/
