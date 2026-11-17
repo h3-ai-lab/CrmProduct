@@ -12,6 +12,7 @@
 ```
 crm-manual/
 ├── build.py              # 构建脚本（纯 Python 标准库，无需安装依赖）
+├── CHANGELOG.md          # 自动生成的版本更新记录
 ├── .github/workflows/    # GitHub Pages 自动构建与部署
 ├── releases/             # 不可覆盖的版本快照和版本索引
 ├── docs/                 # ★ 中文内容源（只改这里）
@@ -77,6 +78,8 @@ python3 build.py --release 1.1.0 \
 ```
 
 每次发布会在 `releases/<version>/` 固化不可覆盖的快照，在 `dist/versions/` 生成历史版本页。侧栏的“历史版本”入口可查看各版本、发布日期、发布说明、变更页面和关联 PRD。
+
+每次发布会同步生成 `CHANGELOG.md`，记录需求编号、变更模块和具体页面；历史版本页也会展示相同信息。
 
 完整维护规范见 [MAINTENANCE.md](MAINTENANCE.md)。
 

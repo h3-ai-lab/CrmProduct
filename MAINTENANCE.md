@@ -29,9 +29,10 @@ WorkBuddy 将 `/preview/p1/` 映射到 `crm-manual/dist/`，服务会实时读�
 7. 执行 `python3 build.py --check`。
 8. 确认新版本号、发布日期、发布说明和 PRD 链接。
 9. 固化新版本并重建 `dist/`。
-10. 提交并推送到 GitHub `main`。
-11. 等待 `Deploy CrmProduct` 部署完成。
-12. 验证公网中文、英文、历史版本和本版本归档。
+10. 检查自动生成的 `CHANGELOG.md` 和历史版本页中的模块变化。
+11. 提交并推送到 GitHub `main`。
+12. 等待 `Deploy CrmProduct` 部署完成。
+13. 验证公网中文、英文、版本更新记录和本版本归档。
 
 ## 发布命令
 
@@ -45,6 +46,9 @@ python3 build.py --release 1.1.0 \
   --released-at 2026-11-12 \
   --summary "新增短链管理、TikTok Leads、Messenger 来源区分、五类学习报告和用户导出扩容。" \
   --prd-url "https://example.com/prd" \
+  --requirement "REQ-XXX-001" \
+  --change "营销中心：新增短链管理" \
+  --change "销售中心：接入 TikTok Leads" \
   --changed-page M-01 \
   --changed-page S-00
 ```
@@ -54,6 +58,8 @@ python3 build.py --release 1.1.0 \
 - 自动比对上一版本内容并记录发生变化的页面。
 - 同时写入 `--changed-page` 指定的页面。
 - 生成不可覆盖的 `releases/<version>/site/` 快照。
+- 生成 `CHANGELOG.md`，记录版本、日期、需求编号、变更模块和页面。
+- 在历史版本页列出变更模块和对应页面。
 - 更新 `releases/index.json`。
 - 重建当前站点和 `dist/versions/index.html`。
 - 保持 `/preview/p1/index.html` 继续指向最新版本。
@@ -99,6 +105,7 @@ crm-manual/
 - [ ] 所有截图来自当前上线版本，敏感信息已处理。
 - [ ] 当前页面显示正确版本号。
 - [ ] 历史版本页包含发布日期、发布说明、变更页面和 PRD 链接。
+- [ ] `CHANGELOG.md` 已更新，变更模块和页面与实际修改一致。
 - [ ] 旧版本内容仍可访问且没有被覆盖。
 - [ ] 固定入口 `/preview/p1/index.html` 可访问。
 - [ ] 构建脚本无报错，中英文文档编号一致。

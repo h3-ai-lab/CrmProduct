@@ -21,10 +21,12 @@ The trigger may arrive as `xxx需求已上线`, including from a separate requir
 6. Use official feature names and document only behavior confirmed as live.
 7. Run `python3 build.py --check`.
 8. Create the next immutable release with `python3 build.py --release <version> ...` and record the PRD URL.
-9. Commit and push to `main`.
-10. Wait for the `Deploy CrmProduct` workflow to succeed.
-11. Verify the public home page, English page, version history and archived version.
-12. Report requirement name, changed pages, version number, public URL, verification results, and unresolved issues.
+9. Add the requirement ID with `--requirement` and each module-level change with `--change`.
+10. Do not hand-edit generated `CHANGELOG.md`; verify it and the module list on the version-history page after the build.
+11. Commit and push to `main`.
+12. Wait for the `Deploy CrmProduct` workflow to succeed.
+13. Verify the public home page, English page, version history and archived version.
+14. Report requirement name, changed modules/pages, version number, public URL, verification results, and unresolved issues.
 
 Version rules:
 

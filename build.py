@@ -494,6 +494,22 @@ def latest_release(index):
     return releases[0]
 
 
+def release_change_details(release):
+    manifest_file = RELEASES / release["version"] / "articles.json"
+    if not manifest_file.exists():
+        return []
+    manifest = json.loads(manifest_file.read_text(encoding="utf-8"))
+    articles = {item["id"]: item for item in manifest.get("zh", [])}
+    return [
+        {
+            "id": page_id,
+            "module": articles.get(page_id, {}).get("module", "其他"),
+            "title": articles.get(page_id, {}).get("title", page_id),
+        }
+        for page_id in release.get("changed_pages", [])
+    ]
+
+
 def article_manifest(built):
     return {
         lang: [
@@ -601,6 +617,8 @@ def create_release(args, index):
         "released_at": args.released_at or date.today().isoformat(),
         "changed_pages": [],
         "prd_urls": args.prd_url or [],
+        "requirements": args.requirement or [],
+        "change_notes": args.change or [],
     }
     built = build_site_to(
         site_root,
@@ -641,6 +659,8 @@ gap:16px;align-items:flex-start}.ver{font:600 16px ui-monospace,Menlo,monospace;
 .summary{color:var(--ink2);margin:8px 0}.links{display:flex;gap:16px;flex-wrap:wrap}
 a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
 .meta{color:var(--ink3);font-size:12px;margin-top:10px}.empty{color:var(--ink3);padding:32px 0}
+.change-list{margin:8px 0 0;padding-left:20px;color:var(--ink2);font-size:13px}
+.change-list li{margin:3px 0}.change-list strong{color:var(--ink)}
 """
 
 
@@ -651,7 +671,14 @@ def versions_page(index):
         label = html.escape(release.get("label", ""))
         summary = html.escape(release.get("summary", ""))
         released_at = html.escape(release.get("released_at", ""))
-        changed = html.escape("、".join(release.get("changed_pages", [])) or "—")
+        details = release_change_details(release)
+        modules = sorted({item["module"] for item in details})
+        changed = "、".join(modules) or "—"
+        changed_items = "".join(
+            f'<li><strong>{html.escape(item["module"])}</strong> · '
+            f'{html.escape(item["id"])} {html.escape(item["title"])}</li>'
+            for item in details
+        )
         prds = release.get("prd_urls", [])
         prd_links = " ".join(
             f'<a href="{html.escape(url)}" target="_blank" rel="noopener">需求依据 {i + 1}</a>'
@@ -663,7 +690,8 @@ def versions_page(index):
             f'<p class="summary">{summary}</p>'
             f'<div class="links"><a href="{version}/index.html">中文版本</a>'
             f'<a href="{version}/en/index.html">English</a>{prd_links}</div>'
-            f'<div class="meta">变更页面：{changed}</div></section>'
+            f'<div class="meta">变更模块：{html.escape(changed)}</div>'
+            f'<ul class="change-list">{changed_items}</ul></section>'
         )
     if not rows:
         rows.append('<p class="empty">尚无已固化版本。执行带 --release 的构建后，历史版本会显示在这里。</p>')
@@ -671,9 +699,9 @@ def versions_page(index):
     return f"""<!DOCTYPE html>
 <html lang="zh-CN"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Dino CRM 手册版本历史</title><style>{VERSIONS_CSS}</style></head>
-<body><main><h1>Dino CRM 手册版本历史</h1>
-<p class="sub">当前版本：<strong>v{current}</strong>。所有版本按发布时间倒序，已发布快照不会覆盖。</p>
+<title>Dino CRM 手册版本与更新记录</title><style>{VERSIONS_CSS}</style></head>
+<body><main><h1>Dino CRM 手册版本与更新记录</h1>
+<p class="sub">当前版本：<strong>v{current}</strong>。所有版本按发布时间倒序，已发布快照不会覆盖；每个版本列出变更模块和对应页面。</p>
 <p><a href="../index.html">返回当前手册</a> · <a href="../en/index.html">Current English handbook</a></p>
 {''.join(rows)}</main></body></html>"""
 
@@ -695,6 +723,43 @@ def publish_versions(index):
     )
     (versions_dir / "index.html").write_text(versions_page(index), encoding="utf-8")
     print(f"  → {versions_dir.relative_to(ROOT)}/index.html（历史版本）")
+
+
+def sync_changelog(index):
+    lines = [
+        "# CRM 使用手册更新记录",
+        "",
+        "> 由 `build.py` 根据不可覆盖的版本快照自动生成。",
+        "",
+    ]
+    for release in index.get("releases", []):
+        lines.extend(
+            [
+                f"## v{release['version']} · {release.get('released_at', '')} · {release.get('label', '')}",
+                "",
+                release.get("summary", ""),
+                "",
+            ]
+        )
+        requirements = release.get("requirements", [])
+        if requirements:
+            lines.extend(["需求：" + "、".join(requirements), ""])
+        details = release_change_details(release)
+        if details:
+            lines.extend(["| 模块 | 页面 |", "|---|---|"])
+            lines.extend(f'| {item["module"]} | {item["id"]} {item["title"]} |' for item in details)
+            lines.append("")
+        change_notes = release.get("change_notes", [])
+        for note in change_notes:
+            lines.append(f"- {note}")
+        if change_notes:
+            lines.append("")
+        for url in release.get("prd_urls", []):
+            lines.append(f"- 需求依据：{url}")
+        if release.get("prd_urls"):
+            lines.append("")
+    (ROOT / "CHANGELOG.md").write_text("\n".join(lines).rstrip() + "\n", encoding="utf-8")
+    print("  → CHANGELOG.md（版本更新记录）")
 
 
 def publish_current_from_release(release):
@@ -744,6 +809,13 @@ def main():
     parser.add_argument("--summary", default="", help="版本发布说明")
     parser.add_argument("--released-at", default="", help="发布日期 YYYY-MM-DD")
     parser.add_argument("--prd-url", action="append", default=[], help="关联 PRD，可重复传入")
+    parser.add_argument("--requirement", action="append", default=[], help="关联需求编号，可重复传入")
+    parser.add_argument(
+        "--change",
+        action="append",
+        default=[],
+        help='结构化更新说明，例如 "销售管理：新增首跟 CC 字段"，可重复传入',
+    )
     parser.add_argument(
         "--changed-page",
         action="append",
@@ -782,6 +854,7 @@ def main():
     if not index["releases"]:
         raise SystemExit("尚无已固化版本。请先使用 --release 建第一个版本。")
 
+    sync_changelog(index)
     current = index["releases"][0]
     publish_current_from_release(current)
     publish_versions(index)
