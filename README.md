@@ -19,7 +19,7 @@ crm-manual/
 │   ├── images/           # 截图统一放这里，构建时自动拷入 dist/images
 │   ├── dashboard/        # 管理看板 D 系列
 │   ├── start/            # 开始使用 G 系列
-│   ├── sales/            # 销售管理 S-00~S-05（销售专员/组长）
+│   ├── sales/            # 销售管理 S-00~S-06（销售专员/组长）
 │   ├── system/           # 系统管理 A-01~A-06（管理员/超管）
 │   ├── marketing/        # 营销中心 M 系列
 │   ├── user/             # 用户与订单 U/O 系列

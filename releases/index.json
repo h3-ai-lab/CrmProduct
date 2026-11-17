@@ -1,6 +1,22 @@
 {
-  "current": "1.1.0",
+  "current": "1.2.0",
   "releases": [
+    {
+      "version": "1.2.0",
+      "label": "首跟与跟进转化",
+      "summary": "REQ-CC-002：新增首跟 CC、首次分配/外呼/接通字段、筛选与团队监控；REQ-DASH-007：管理看板新增 5 个跟进转化指标。",
+      "released_at": "2026-11-17",
+      "changed_pages": [
+        "D-01",
+        "G-00",
+        "S-00",
+        "S-06"
+      ],
+      "prd_urls": [
+        "https://h3-ai-lab.github.io/hhhprd/prd-first-contact-concise.html",
+        "https://h3-ai-lab.github.io/hhhprd/prd-follow-up-funnel.html"
+      ]
+    },
     {
       "version": "1.1.0",
       "label": "使用手册整体优化",
